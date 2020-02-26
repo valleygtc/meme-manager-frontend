@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, message } from 'antd';
+import { Form, message, Button } from 'antd';
 
 import ImageWall from './ImageWall.jsx';
-import AddButtonModal from './AddButtonModal.jsx';
 import ImageAddForm from './ImageAddForm.jsx';
+import FormModalButton from './FormModalButton.jsx';
 
 import { get, postForm, post } from './utils';
 import config from './config';
@@ -97,7 +97,8 @@ export default function App() {
   const WrappedAddForm = Form.create()(ImageAddForm);
   return (
     <div>
-      <AddButtonModal
+      <FormModalButton
+        buttonItem={(<Button type="primary">添加</Button>)}
         title="添加图片"
         WrappedForm={WrappedAddForm}
         onSubmit={handleImageAdd}

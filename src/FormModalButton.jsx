@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
 
 
 /**
  * props:
+ *   buttonItem [Object]
  *   title [String]: 弹出的 Modal 的 title
  *   WrappedForm [Object]
+ *   onSubmit [callback]
  */
-export default function AddButtonModal({
+export default function FormModalButton({
+  buttonItem,
   title,
   WrappedForm,
   onSubmit,
@@ -29,7 +32,7 @@ export default function AddButtonModal({
 
   return (
     <div>
-      <Button type="primary" onClick={showModal}>添加</Button>
+      <buttonItem.type {...buttonItem.props} onClick={showModal} />
       <Modal
         title={title}
         visible={visible}

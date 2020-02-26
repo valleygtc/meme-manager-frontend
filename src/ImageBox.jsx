@@ -10,7 +10,7 @@ import {
 import TagGroup from './TagGroup.jsx';
 import TagsAddForm from './TagsAddForm.jsx';
 import config from './config';
-import AddButtonModal from './AddButtonModal.jsx';
+import FormModalButton from './FormModalButton.jsx';
 
 const { confirm } = Modal;
 const { BACKEND_PREFIX } = config;
@@ -54,7 +54,8 @@ export default function ImageBox({
         </div>
       </Menu.Item>
       <Menu.Item>
-        <AddButtonModal
+        <FormModalButton
+          buttonItem={<div>添加标签</div>}
           title="添加标签"
           WrappedForm={WrappedTagsAddForm}
           onSubmit={(tags) => onTagsAdd(metadata['id'], tags)}
