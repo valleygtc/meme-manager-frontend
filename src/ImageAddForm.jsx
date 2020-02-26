@@ -3,10 +3,6 @@ import { Form, Button } from 'antd';
 
 import Upload from './Upload.jsx';
 import TagsInput from './TagsInput.jsx';
-import { postForm } from './utils';
-import config from './config';
-
-const { BACKEND_PREFIX } = config;
 
 
 /**
@@ -14,34 +10,18 @@ const { BACKEND_PREFIX } = config;
  *   form: Form.create包装自带的form。
  *   onSubmit [callback]
  */
-export default function ImageAddForm({ form, onSubmit }) {
+export default function ImageAddForm({
+  form,
+  onSubmit
+}) {
   const handleSubmit = e => {
     e.preventDefault();
     form.validateFields(async (err, values) => {
       if (err) {
         console.error(err);
       } else {
-        console.log('ImageAddForm handle submit: %o', { values });
-        const image = values['image'];
-        const imageType = image.type.split('/')[1];
-        const body = {
-          image: image,
-          metadata: JSON.stringify({
-            img_type: imageType,
-            tags: values['tags'],
-          })
-        }
-        console.log('ImageAddForm submit: %o', { body });
-        const resp = await postForm(`${BACKEND_PREFIX}/images/add`, body);
-        if (resp.status !== 200) {
-          console.error('Error: %o', { resp });
-          return ;
-        }
-
-        console.log('Success: %o', { resp });
-        form.resetFields();
-        onSubmit();
-        return ;
+          onSubmit(values);
+          form.resetFields();
       }
     });
   };
