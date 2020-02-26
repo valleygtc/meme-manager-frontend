@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Button } from 'antd';
 
 import Upload from './Upload.jsx';
+import TagsInput from './TagsInput.jsx';
 import { postForm } from './utils';
 import config from './config';
 
@@ -20,23 +21,24 @@ export default function ImageAddForm({ form, onSubmit }) {
       if (err) {
         console.error(err);
       } else {
+        console.log('ImageAddForm handle submit: %o', { values });
         const image = values['image'];
         const imageType = image.type.split('/')[1];
         const body = {
           image: image,
           metadata: JSON.stringify({
             img_type: imageType,
-            tags: [values['tag']],
+            tags: values['tags'],
           })
         }
-        console.log('Form submit: %o', { body });
+        console.log('ImageAddForm submit: %o', { body });
         const resp = await postForm(`${BACKEND_PREFIX}/images/add`, body);
         if (resp.status !== 200) {
           console.error('Error: %o', { resp });
           return ;
         }
 
-        console.log('Add Image success: %o', { resp });
+        console.log('Success: %o', { resp });
         form.resetFields();
         onSubmit();
         return ;
@@ -71,10 +73,11 @@ export default function ImageAddForm({ form, onSubmit }) {
         )}
       </Form.Item>
       <Form.Item label="标签">
-        {form.getFieldDecorator('tag', {
-          rules: [{ required: true, message: '必须输入标签' }]
+        {form.getFieldDecorator('tags', {
+          initialValue: [''],
+          rules: [{ required: true, message: '必须输入标签' }],
         })(
-          <Input placeholder="tag" />
+          <TagsInput />
         )}
       </Form.Item>
       <Form.Item {...formItemLayoutWithOutLabel}>
