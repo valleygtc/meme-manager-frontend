@@ -11,9 +11,11 @@ import ImageBox from './ImageBox.jsx';
  *     "tags": [Array[String]],
  *     "create_at": [String],
  *   }
+ *   onImageDelete [callback]
  */
 export default function ImageWall({
   imageMetaDatas,
+  onImageDelete,
 }) {
   return (
     <div
@@ -24,7 +26,11 @@ export default function ImageWall({
     >
       {imageMetaDatas.map((m) => {
         return (
-          <ImageBox key={m['id']} metadata={m} />
+          <ImageBox
+            key={m['id']}
+            metadata={m}
+            onImageDelete={onImageDelete}
+          />
         );
       })}
     </div>

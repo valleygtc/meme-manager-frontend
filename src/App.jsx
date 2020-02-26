@@ -82,7 +82,10 @@ export default function App() {
         WrappedForm={WrappedAddForm}
         onSubmit={handleImageAdd}
       />
-      <ImageWall imageMetaDatas={imageMetaDatas} />
+      <ImageWall
+        imageMetaDatas={imageMetaDatas}
+        onImageDelete={handleImageDelete}
+      />
     </div>
   );
 }
