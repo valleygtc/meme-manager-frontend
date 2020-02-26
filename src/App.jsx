@@ -59,6 +59,21 @@ export default function App() {
     return ;
   }
 
+  const handleImageDelete = async (id) => {
+    console.log('App handleImageDelete: %o', { id });
+    const resp = await get(`${BACKEND_PREFIX}/images/delete`, { id });
+    if (resp.status !== 200) {
+      message.error('网络异常，删除图片失败');
+      console.error('Error: %o', { resp });
+      return ;
+    }
+
+    message.success('删除图片成功');
+    console.log('Success: %o', { resp });
+    refresh();
+    return ;
+  }
+
   const WrappedAddForm = Form.create()(ImageAddForm);
   return (
     <div>
