@@ -5,7 +5,7 @@ import ImageWall from './ImageWall.jsx';
 import AddButtonModal from './AddButtonModal.jsx';
 import ImageAddForm from './ImageAddForm.jsx';
 
-import { get, postForm } from './utils';
+import { get, postForm, post } from './utils';
 import config from './config';
 
 const { BACKEND_PREFIX } = config;
@@ -74,6 +74,26 @@ export default function App() {
     return ;
   }
 
+  const handleTagsAdd = async (imageId, tags) => {
+    console.log('App handleTagsAdd: %o', { imageId, tags });
+    const body = {
+      image_id: imageId,
+      tags,
+    }
+    console.log('App POST body: %o', body)
+    const resp = await post(`${BACKEND_PREFIX}/tags/add`, body);
+    if (resp.status !== 200) {
+      message.error('网络异常，添加标签失败');
+      console.error('Error: %o', { resp });
+      return ;
+    }
+
+    message.success('添加标签成功');
+    console.log('Success: %o', { resp });
+    refresh();
+    return ;
+  }
+
   const WrappedAddForm = Form.create()(ImageAddForm);
   return (
     <div>
@@ -85,6 +105,7 @@ export default function App() {
       <ImageWall
         imageMetaDatas={imageMetaDatas}
         onImageDelete={handleImageDelete}
+        onTagsAdd={handleTagsAdd}
       />
     </div>
   );

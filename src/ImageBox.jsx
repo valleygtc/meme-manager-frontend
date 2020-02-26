@@ -4,10 +4,13 @@ import {
   Dropdown,
   Menu,
   Modal,
+  Form,
 } from 'antd'
 
 import TagGroup from './TagGroup.jsx';
+import TagsAddForm from './TagsAddForm.jsx';
 import config from './config';
+import AddButtonModal from './AddButtonModal.jsx';
 
 const { confirm } = Modal;
 const { BACKEND_PREFIX } = config;
@@ -23,10 +26,12 @@ const { Meta } = Card;
  *     "create_at": [String],
  *   }
  *   onImageDelete [callback]
+ *   onTagsAdd [callback]
  */
 export default function ImageBox({
   metadata,
   onImageDelete,
+  onTagsAdd,
 }){
   const showConfirm = () => {
     confirm({
@@ -39,12 +44,21 @@ export default function ImageBox({
     });
   }
 
+  const WrappedTagsAddForm = Form.create()(TagsAddForm);
+
   const menu = (
     <Menu>
       <Menu.Item>
         <div onClick={showConfirm}>
           删除图片
         </div>
+      </Menu.Item>
+      <Menu.Item>
+        <AddButtonModal
+          title="添加标签"
+          WrappedForm={WrappedTagsAddForm}
+          onSubmit={(tags) => onTagsAdd(metadata['id'], tags)}
+        />
       </Menu.Item>
     </Menu>
   );

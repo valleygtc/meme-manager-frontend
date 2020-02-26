@@ -12,10 +12,12 @@ import ImageBox from './ImageBox.jsx';
  *     "create_at": [String],
  *   }
  *   onImageDelete [callback]
+ *   onTagsAdd [callback]
  */
 export default function ImageWall({
   imageMetaDatas,
   onImageDelete,
+  onTagsAdd,
 }) {
   return (
     <div
@@ -30,6 +32,7 @@ export default function ImageWall({
             key={m['id']}
             metadata={m}
             onImageDelete={onImageDelete}
+            onTagsAdd={onTagsAdd}
           />
         );
       })}
