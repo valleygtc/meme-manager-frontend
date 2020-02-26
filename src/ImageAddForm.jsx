@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form, Input, Button, Upload, Icon } from 'antd';
+import { Form, Input, Button } from 'antd';
 
+import Upload from './Upload.jsx';
 import { postForm } from './utils';
 import config from './config';
 
@@ -12,14 +13,14 @@ const { BACKEND_PREFIX } = config;
  *   form: Form.create包装自带的form。
  *   onSubmit [callback]
  */
-export default function AddForm({ form, onSubmit }) {
+export default function ImageAddForm({ form, onSubmit }) {
   const handleSubmit = e => {
     e.preventDefault();
     form.validateFields(async (err, values) => {
       if (err) {
         console.error(err);
       } else {
-        const image = values['image'][0]['originFileObj'];
+        const image = values['image'];
         const imageType = image.type.split('/')[1];
         const body = {
           image: image,
@@ -36,13 +37,12 @@ export default function AddForm({ form, onSubmit }) {
         }
 
         console.log('Add Image success: %o', { resp });
+        form.resetFields();
         onSubmit();
         return ;
       }
     });
   };
-
-  const { getFieldDecorator } = form;
 
   const formItemLayout = {
     labelCol: {
@@ -61,34 +61,17 @@ export default function AddForm({ form, onSubmit }) {
     },
   };
 
-  const normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
-
   return (
     <Form {...formItemLayout} onSubmit={handleSubmit}>
       <Form.Item label="图片">
-        {getFieldDecorator('image', {
-          valuePropName: 'fileList',
-          getValueFromEvent: normFile,
+        {form.getFieldDecorator('image', {
           rules: [{ required: true, message: '必须选择一个图片' }]
         })(
-          <Upload
-            beforeUpload={() => false}
-            listType="picture"
-          >
-            <Button>
-              <Icon type="upload" /> 点击选择图片
-            </Button>
-          </Upload>,
+          <Upload />
         )}
       </Form.Item>
       <Form.Item label="标签">
-        {getFieldDecorator('tag', {
+        {form.getFieldDecorator('tag', {
           rules: [{ required: true, message: '必须输入标签' }]
         })(
           <Input placeholder="tag" />
@@ -97,7 +80,7 @@ export default function AddForm({ form, onSubmit }) {
       <Form.Item {...formItemLayoutWithOutLabel}>
         <Button type="primary" htmlType="submit">
           提交
-          </Button>
+        </Button>
       </Form.Item>
     </Form>
   );

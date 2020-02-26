@@ -8,8 +8,8 @@ import { Button, Modal } from 'antd';
  *   WrappedForm [Object]
  */
 export default function AddButtonModal({
-    title,
-    WrappedForm,
+  title,
+  WrappedForm,
 }) {
   const [visible, setVisible] = useState(false);
 
@@ -17,7 +17,7 @@ export default function AddButtonModal({
     setVisible(true);
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = () => {
     setVisible(false);
   };
 
