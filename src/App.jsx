@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, message, Button } from 'antd';
+import { Form, message, Button, Pagination } from 'antd';
 
 import ImageWall from './ImageWall.jsx';
 import ImageAddForm from './ImageAddForm.jsx';
@@ -13,10 +13,18 @@ const { BACKEND_PREFIX } = config;
 
 export default function App() {
   const [ imageMetaDatas, setImageMetaDatas ] = useState([]);
+  const [ pagination, setPagination ] = useState({
+    current: 1,
+    pageSize: 2,
+    total: null,
+  });
 
   const refresh = async () => {
     console.log('App: handle refresh');
-    const resp = await get(`${BACKEND_PREFIX}/images/`);
+    const resp = await get(`${BACKEND_PREFIX}/images/`, {
+      page: pagination.current,
+      per_page: pagination.pageSize,
+    });
     if (resp.status !== 200) {
       message.error('网络异常，刷新失败');
       console.error('Error: %o', { resp });
@@ -24,15 +32,20 @@ export default function App() {
     }
 
     const respJSON = await resp.json();
-    console.log('App: receive data: %o', { respJSON })
-    setImageMetaDatas(respJSON.data)
+    console.log('App: receive resp: %o', { respJSON });
+    setImageMetaDatas(respJSON.data);
+    setPagination({
+      ...pagination,
+      current: respJSON['pagination']['page'],
+      pageSize: respJSON['pagination']['per_page'],
+      total: respJSON['pagination']['total'],
+    });
     return ;
   }
 
-  // 仅在组件挂载时执行
   useEffect(() => {
     refresh();
-  }, [])
+  }, [pagination.current, pagination.pageSize])
 
   const handleImageAdd = async (values) => {
     console.log('App handleImageAdd: %o', { values });
@@ -128,6 +141,21 @@ export default function App() {
         onImageDelete={handleImageDelete}
         onTagsAdd={handleTagsAdd}
         onTagDelete={handleTagDelete}
+      />
+      <Pagination
+        {...pagination}
+        showSizeChanger
+        pageSizeOptions={[20, 50, 100, 200]}
+        onChange={(page, pageSize) => setPagination({
+          ...pagination,
+          current: page,
+          pageSize,
+        })}
+        onShowSizeChange={(current, size) => setPagination({
+          ...pagination,
+          current,
+          pageSize: size,
+        })}
       />
     </div>
   );
