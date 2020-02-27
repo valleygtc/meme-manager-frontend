@@ -4,6 +4,7 @@ import { Form, message, Button, Pagination } from 'antd';
 import ImageWall from './ImageWall.jsx';
 import ImageAddForm from './ImageAddForm.jsx';
 import FormModalButton from './FormModalButton.jsx';
+import SearchBar from './SearchBar.jsx';
 
 import { get, postForm, post } from './utils';
 import config from './config';
@@ -18,13 +19,19 @@ export default function App() {
     pageSize: 20,
     total: null,
   });
+  const [ searchField, setSearchField ] = useState({
+    key: 'tag',
+    value: '',
+  });
 
   const refresh = async () => {
     console.log('App: handle refresh');
-    const resp = await get(`${BACKEND_PREFIX}/images/`, {
+    const params = {
       page: pagination.current,
       per_page: pagination.pageSize,
-    });
+      [searchField.key]: searchField.value,
+    }
+    const resp = await get(`${BACKEND_PREFIX}/images/`, params);
     if (resp.status !== 200) {
       message.error('网络异常，刷新失败');
       console.error('Error: %o', { resp });
@@ -45,7 +52,7 @@ export default function App() {
 
   useEffect(() => {
     refresh();
-  }, [pagination.current, pagination.pageSize])
+  }, [pagination.current, pagination.pageSize, searchField])
 
   const handleImageAdd = async (values) => {
     console.log('App handleImageAdd: %o', { values });
@@ -135,6 +142,11 @@ export default function App() {
         title="添加图片"
         WrappedForm={WrappedAddForm}
         onSubmit={handleImageAdd}
+      />
+      <SearchBar
+        initialKey={searchField.key}
+        initialValue={searchField.value}
+        onSearch={(key, value) => setSearchField({ key, value })}
       />
       <ImageWall
         imageMetaDatas={imageMetaDatas}
