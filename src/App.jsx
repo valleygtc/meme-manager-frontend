@@ -94,6 +94,26 @@ export default function App() {
     return ;
   }
 
+  const handleTagDelete = async (imageId, tag) => {
+    console.log('App handleTagDelete: %o', { imageId, tag });
+    const body = {
+      image_id: imageId,
+      tag,
+    }
+    console.log('App POST body: %o', body)
+    const resp = await post(`${BACKEND_PREFIX}/tags/delete`, body);
+    if (resp.status !== 200) {
+      message.error('网络异常，删除标签失败');
+      console.error('Error: %o', { resp });
+      return ;
+    }
+
+    message.success('删除标签成功');
+    console.log('Success: %o', { resp });
+    refresh();
+    return ;
+  }
+
   const WrappedAddForm = Form.create()(ImageAddForm);
   return (
     <div>
@@ -107,6 +127,7 @@ export default function App() {
         imageMetaDatas={imageMetaDatas}
         onImageDelete={handleImageDelete}
         onTagsAdd={handleTagsAdd}
+        onTagDelete={handleTagDelete}
       />
     </div>
   );

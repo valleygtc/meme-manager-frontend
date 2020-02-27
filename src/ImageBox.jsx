@@ -27,11 +27,13 @@ const { Meta } = Card;
  *   }
  *   onImageDelete [callback]
  *   onTagsAdd [callback]
+ *   onTagDelete [callback]
  */
 export default function ImageBox({
   metadata,
   onImageDelete,
   onTagsAdd,
+  onTagDelete,
 }){
   const showConfirm = () => {
     confirm({
@@ -67,6 +69,7 @@ export default function ImageBox({
   return (
     <Dropdown overlay={menu} trigger={['contextMenu']}>
       <Card
+        hoverable
         style={{ width: 240 }}
         cover={
           <img
@@ -75,7 +78,7 @@ export default function ImageBox({
           />
         }
       >
-        <Meta description={<TagGroup tags={metadata['tags']}/>}/>
+        <Meta description={<TagGroup tags={metadata['tags']} onTagDelete={(tag) => onTagDelete(metadata['id'], tag)} />}/>
       </Card>
     </Dropdown>
   );
