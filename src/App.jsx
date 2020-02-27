@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Form, message, Button, Pagination } from 'antd';
+import { message, Pagination } from 'antd';
 
+import FunctionBar from './FunctionBar.jsx';
 import ImageWall from './ImageWall.jsx';
-import ImageAddForm from './ImageAddForm.jsx';
-import FormModalButton from './FormModalButton.jsx';
-import SearchBar from './SearchBar.jsx';
 
 import { get, postForm, post } from './utils';
 import config from './config';
@@ -133,19 +131,12 @@ export default function App() {
     refresh();
     return ;
   }
-
-  const WrappedAddForm = Form.create()(ImageAddForm);
+  
   return (
     <div>
-      <FormModalButton
-        buttonItem={(<Button type="primary">添加</Button>)}
-        title="添加图片"
-        WrappedForm={WrappedAddForm}
-        onSubmit={handleImageAdd}
-      />
-      <SearchBar
-        initialKey={searchField.key}
-        initialValue={searchField.value}
+      <FunctionBar
+        searchField={searchField}
+        onImageAdd={handleImageAdd}
         onSearch={(key, value) => setSearchField({ key, value })}
       />
       <ImageWall
