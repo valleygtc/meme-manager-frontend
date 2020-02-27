@@ -15,7 +15,7 @@ export default function App() {
   const [ imageMetaDatas, setImageMetaDatas ] = useState([]);
   const [ pagination, setPagination ] = useState({
     current: 1,
-    pageSize: 2,
+    pageSize: 20,
     total: null,
   });
 
@@ -145,7 +145,7 @@ export default function App() {
       <Pagination
         {...pagination}
         showSizeChanger
-        pageSizeOptions={[20, 50, 100, 200]}
+        pageSizeOptions={['20', '50', '100', '200']}
         onChange={(page, pageSize) => setPagination({
           ...pagination,
           current: page,
