@@ -29,7 +29,7 @@ export default function App() {
       per_page: pagination.pageSize,
       [searchField.key]: searchField.value,
     }
-    const resp = await get(`${BACKEND_PREFIX}/images/`, params);
+    const resp = await get(`${BACKEND_PREFIX}/api/images/`, params);
     if (resp.status !== 200) {
       message.error('网络异常，刷新失败');
       console.error('Error: %o', { resp });
@@ -64,7 +64,7 @@ export default function App() {
       })
     }
     console.log('App post body: %o', body);
-    const resp = await postForm(`${BACKEND_PREFIX}/images/add`, body);
+    const resp = await postForm(`${BACKEND_PREFIX}/api/images/add`, body);
     if (resp.status !== 200) {
       message.error('网络异常，添加图片失败');
       console.error('Error: %o', { resp });
@@ -79,7 +79,7 @@ export default function App() {
 
   const handleImageDelete = async (id) => {
     console.log('App handleImageDelete: %o', { id });
-    const resp = await get(`${BACKEND_PREFIX}/images/delete`, { id });
+    const resp = await get(`${BACKEND_PREFIX}/api/images/delete`, { id });
     if (resp.status !== 200) {
       message.error('网络异常，删除图片失败');
       console.error('Error: %o', { resp });
@@ -99,7 +99,7 @@ export default function App() {
       tags,
     }
     console.log('App POST body: %o', body)
-    const resp = await post(`${BACKEND_PREFIX}/tags/add`, body);
+    const resp = await post(`${BACKEND_PREFIX}/api/tags/add`, body);
     if (resp.status !== 200) {
       message.error('网络异常，添加标签失败');
       console.error('Error: %o', { resp });
@@ -119,7 +119,7 @@ export default function App() {
       tag,
     }
     console.log('App POST body: %o', body)
-    const resp = await post(`${BACKEND_PREFIX}/tags/delete`, body);
+    const resp = await post(`${BACKEND_PREFIX}/api/tags/delete`, body);
     if (resp.status !== 200) {
       message.error('网络异常，删除标签失败');
       console.error('Error: %o', { resp });

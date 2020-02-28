@@ -73,7 +73,7 @@ export default function ImageBox({
         style={{ width: 240 }}
         cover={
           <img
-            src={`${BACKEND_PREFIX}/images?id=${metadata['id']}`}
+            src={`${BACKEND_PREFIX}/api/images/?id=${metadata['id']}`}
             alt={`img-${metadata['id']}`}
           />
         }
