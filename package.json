@@ -2,7 +2,6 @@
   "name": "meme-manager",
   "version": "0.1.0",
   "private": true,
-  "main": "main.js",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -14,7 +13,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-electron": "electron .",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -35,7 +33,5 @@
     ]
   },
   "devDependencies": {
-    "electron": "^8.0.2",
-    "electron-builder": "^22.3.2"
   }
 }
