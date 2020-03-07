@@ -21,6 +21,12 @@ export default function SearchBar({
   onReset,
 }) {
   const [ key, setKey ] = useState(initialKey);
+  const [value, setValue] = useState(initialValue);
+
+  const handleReset = () => {
+    setValue('');
+    onReset();
+  }
 
   return (
     <div
@@ -35,7 +41,8 @@ export default function SearchBar({
         <Option value="tag">标签</Option>
       </Select>
       <Input.Search
-        defaultValue={initialValue}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         onSearch={(value) => onSearch(key, value)}
         enterButton
       />
@@ -44,7 +51,7 @@ export default function SearchBar({
           marginLeft: '10px',
         }}
       >
-        <Button type="primary" onClick={onReset}>重置</Button>
+        <Button type="primary" onClick={handleReset}>重置</Button>
       </div>
     </div>
   );
