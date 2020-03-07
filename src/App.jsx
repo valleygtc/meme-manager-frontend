@@ -52,6 +52,17 @@ export default function App() {
     refresh();
   }, [pagination.current, pagination.pageSize, searchField])
 
+  const handleSearch = (key, value) => {
+    setPagination({
+      ...pagination,
+      current: 1,
+    });
+    setSearchField({
+      key,
+      value,
+    });
+  }
+
   const handleImageAdd = async (values) => {
     console.log('App handleImageAdd: %o', { values });
     const image = values['image'];
@@ -137,7 +148,7 @@ export default function App() {
       <FunctionBar
         searchField={searchField}
         onImageAdd={handleImageAdd}
-        onSearch={(key, value) => setSearchField({ key, value })}
+        onSearch={handleSearch}
       />
       <ImageWall
         imageMetaDatas={imageMetaDatas}
