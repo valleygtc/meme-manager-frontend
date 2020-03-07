@@ -35,6 +35,12 @@ export default function ImageBox({
   onTagsAdd,
   onTagDelete,
 }){
+  const imgSrc = `${BACKEND_PREFIX}/api/images/?id=${metadata['id']}`
+
+  const showImage = () => {
+    window.open(imgSrc);
+  }
+
   const showConfirm = () => {
     confirm({
       title: '确定删除该图片？',
@@ -51,8 +57,8 @@ export default function ImageBox({
   const menu = (
     <Menu>
       <Menu.Item>
-        <div onClick={showConfirm}>
-          删除图片
+        <div onClick={showImage}>
+          查看图片
         </div>
       </Menu.Item>
       <Menu.Item>
@@ -62,6 +68,11 @@ export default function ImageBox({
           WrappedForm={WrappedTagsAddForm}
           onSubmit={(tags) => onTagsAdd(metadata['id'], tags)}
         />
+      </Menu.Item>
+      <Menu.Item>
+        <div onClick={showConfirm}>
+          删除图片
+        </div>
       </Menu.Item>
     </Menu>
   );
@@ -86,7 +97,7 @@ export default function ImageBox({
               maxWidth: '100%',
               margin: 'auto',
             }}
-            src={`${BACKEND_PREFIX}/api/images/?id=${metadata['id']}`}
+            src={imgSrc}
             alt={`img-${metadata['id']}`}
           />
         </div>
