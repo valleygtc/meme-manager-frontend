@@ -3,6 +3,7 @@ import { message, Pagination } from 'antd';
 
 import FunctionBar from './FunctionBar.jsx';
 import ImageWall from './ImageWall.jsx';
+import Footer from './Footer.jsx';
 
 import { get, postForm, post } from './utils';
 import config from './config';
@@ -146,53 +147,62 @@ export default function App() {
   return (
     <div
       style={{
-        maxWidth: '1000px',
-        margin: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minHeight: '100vh',
+        backgroundColor: '#eeeeee',
       }}
     >
       <div
         style={{
-          maxWidth: '970px',
-          marginBottom: '10px',
+          flexGrow: '1',
+          maxWidth: '1010px',
         }}
       >
-        <FunctionBar
-          searchField={searchField}
-          onImageAdd={handleImageAdd}
-          onSearch={handleSearch}
-        />
-      </div>
-      <div>
+        <div
+          style={{
+            marginBottom: '10px',
+          }}
+        >
+          <FunctionBar
+            searchField={searchField}
+            onImageAdd={handleImageAdd}
+            onSearch={handleSearch}
+          />
+        </div>
         <ImageWall
           imageMetaDatas={imageMetaDatas}
           onImageDelete={handleImageDelete}
           onTagsAdd={handleTagsAdd}
           onTagDelete={handleTagDelete}
         />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '20px',
+            marginBottom: '20px',
+          }}
+        >
+          <Pagination
+            {...pagination}
+            showSizeChanger
+            pageSizeOptions={['20', '50', '100', '200']}
+            onChange={(page, pageSize) => setPagination({
+              ...pagination,
+              current: page,
+              pageSize,
+            })}
+            onShowSizeChange={(current, size) => setPagination({
+              ...pagination,
+              current,
+              pageSize: size,
+            })}
+          />
+        </div>
       </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '20px',
-        }}
-      >
-        <Pagination
-          {...pagination}
-          showSizeChanger
-          pageSizeOptions={['20', '50', '100', '200']}
-          onChange={(page, pageSize) => setPagination({
-            ...pagination,
-            current: page,
-            pageSize,
-          })}
-          onShowSizeChange={(current, size) => setPagination({
-            ...pagination,
-            current,
-            pageSize: size,
-          })}
-        />
-      </div>
+      <Footer />
     </div>
   );
 }

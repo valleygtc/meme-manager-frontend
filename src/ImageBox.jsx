@@ -87,8 +87,8 @@ export default function ImageBox({
             display: 'flex',
             justifyContent: 'center',
             alignContent: 'center',
-            width: '240px',
-            height: '240px',
+            width: '250px',
+            height: '250px',
             overflow: 'hidden',
           }}
         >
@@ -103,7 +103,7 @@ export default function ImageBox({
         </div>
         <div
           style={{
-            width: '240px',
+            width: '250px',
             minHeight: '50px',
             overflow: 'hidden',
           }}

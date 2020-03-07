@@ -25,17 +25,29 @@ export default function FunctionBar({
         display: 'flex',
       }}
     >
-      <SearchBar
-        initialKey={searchField.key}
-        initialValue={searchField.value}
-        onSearch={onSearch}
-      />
-      <FormModalButton
-        buttonItem={(<Button type="primary">添加</Button>)}
-        title="添加图片"
-        WrappedForm={WrappedAddForm}
-        onSubmit={onImageAdd}
-      />
+      <div
+        style={{
+          flexGrow: '1',
+        }}
+      >
+        <SearchBar
+          initialKey={searchField.key}
+          initialValue={searchField.value}
+          onSearch={onSearch}
+        />
+      </div>
+      <div
+        style={{
+          marginLeft: '100px',
+        }}
+      >
+        <FormModalButton
+          buttonItem={(<Button type="primary">添加</Button>)}
+          title="添加图片"
+          WrappedForm={WrappedAddForm}
+          onSubmit={onImageAdd}
+        />
+      </div>
     </div>
   );
 }

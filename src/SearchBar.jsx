@@ -21,20 +21,22 @@ export default function SearchBar({
   const [ key, setKey ] = useState(initialKey);
 
   return (
-    <Input.Group compact>
+    <div
+      style={{
+        display: 'flex',
+      }}
+    >
       <Select
         value={key}
-        style={{ width: '10%' }}
         onSelect={setKey}
       >
         <Option value="tag">标签</Option>
       </Select>
       <Input.Search
-        style={{ width: '50%' }}
         defaultValue={initialValue}
         onSearch={(value) => onSearch(key, value)}
         enterButton
       />
-    </Input.Group>
+    </div>
   );
 }

@@ -26,6 +26,8 @@ export default function ImageWall({
       style={{
         display: 'flex',
         flexWrap: 'wrap',
+        backgroundColor: 'white',
+        boxShadow: '2px 2px 5px #a0a0a0',
       }}
     >
       {imageMetaDatas.map((m) => {
