@@ -23,7 +23,6 @@ export default function FunctionBar({
     <div
       style={{
         display: 'flex',
-        marginBottom: '10px',
       }}
     >
       <SearchBar

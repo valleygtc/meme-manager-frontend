@@ -150,17 +150,26 @@ export default function App() {
         margin: 'auto',
       }}
     >
-      <FunctionBar
-        searchField={searchField}
-        onImageAdd={handleImageAdd}
-        onSearch={handleSearch}
-      />
-      <ImageWall
-        imageMetaDatas={imageMetaDatas}
-        onImageDelete={handleImageDelete}
-        onTagsAdd={handleTagsAdd}
-        onTagDelete={handleTagDelete}
-      />
+      <div
+        style={{
+          maxWidth: '970px',
+          marginBottom: '10px',
+        }}
+      >
+        <FunctionBar
+          searchField={searchField}
+          onImageAdd={handleImageAdd}
+          onSearch={handleSearch}
+        />
+      </div>
+      <div>
+        <ImageWall
+          imageMetaDatas={imageMetaDatas}
+          onImageDelete={handleImageDelete}
+          onTagsAdd={handleTagsAdd}
+          onTagDelete={handleTagDelete}
+        />
+      </div>
       <div
         style={{
           display: 'flex',
