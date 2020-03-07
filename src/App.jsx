@@ -146,7 +146,7 @@ export default function App() {
   return (
     <div
       style={{
-        maxWidth: 960,
+        maxWidth: '1000px',
         margin: 'auto',
       }}
     >

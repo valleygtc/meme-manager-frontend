@@ -24,3 +24,7 @@
 .tag:focus {
     background-color: DeepSkyBlue;
 }
+
+.imageBox:hover {
+    border: 1px solid black;
+}

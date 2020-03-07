@@ -68,18 +68,38 @@ export default function ImageBox({
   
   return (
     <Dropdown overlay={menu} trigger={['contextMenu']}>
-      <Card
-        hoverable
-        style={{ width: 240 }}
-        cover={
+      <div
+        className='imageBox'
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignContent: 'center',
+            width: '240px',
+            height: '240px',
+            overflow: 'hidden',
+          }}
+        >
           <img
+            style={{
+              maxWidth: '100%',
+              margin: 'auto',
+            }}
             src={`${BACKEND_PREFIX}/api/images/?id=${metadata['id']}`}
             alt={`img-${metadata['id']}`}
           />
-        }
-      >
-        <Meta description={<TagGroup tags={metadata['tags']} onTagDelete={(tag) => onTagDelete(metadata['id'], tag)} />}/>
-      </Card>
+        </div>
+        <div
+          style={{
+            width: '240px',
+            minHeight: '50px',
+            overflow: 'hidden',
+          }}
+        >
+          <TagGroup tags={metadata['tags']} onTagDelete={(tag) => onTagDelete(metadata['id'], tag)} />
+        </div>
+      </div>
     </Dropdown>
   );
 }
