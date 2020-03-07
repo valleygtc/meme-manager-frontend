@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Row, Col } from 'antd';
+import { Form, Button } from 'antd';
 
 import ImageAddForm from './ImageAddForm.jsx';
 import FormModalButton from './FormModalButton.jsx';
@@ -20,22 +20,23 @@ export default function FunctionBar({
   const WrappedAddForm = Form.create()(ImageAddForm);
 
   return (
-    <Row>
-      <Col span={18}>
-        <SearchBar
-          initialKey={searchField.key}
-          initialValue={searchField.value}
-          onSearch={onSearch}
-        />
-      </Col>
-      <Col span={6}>
-        <FormModalButton
-          buttonItem={(<Button type="primary">添加</Button>)}
-          title="添加图片"
-          WrappedForm={WrappedAddForm}
-          onSubmit={onImageAdd}
-        />
-      </Col>
-    </Row>
+    <div
+      style={{
+        display: 'flex',
+        marginBottom: '10px',
+      }}
+    >
+      <SearchBar
+        initialKey={searchField.key}
+        initialValue={searchField.value}
+        onSearch={onSearch}
+      />
+      <FormModalButton
+        buttonItem={(<Button type="primary">添加</Button>)}
+        title="添加图片"
+        WrappedForm={WrappedAddForm}
+        onSubmit={onImageAdd}
+      />
+    </div>
   );
 }

@@ -144,7 +144,12 @@ export default function App() {
   }
   
   return (
-    <div>
+    <div
+      style={{
+        maxWidth: 960,
+        margin: 'auto',
+      }}
+    >
       <FunctionBar
         searchField={searchField}
         onImageAdd={handleImageAdd}
@@ -156,21 +161,29 @@ export default function App() {
         onTagsAdd={handleTagsAdd}
         onTagDelete={handleTagDelete}
       />
-      <Pagination
-        {...pagination}
-        showSizeChanger
-        pageSizeOptions={['20', '50', '100', '200']}
-        onChange={(page, pageSize) => setPagination({
-          ...pagination,
-          current: page,
-          pageSize,
-        })}
-        onShowSizeChange={(current, size) => setPagination({
-          ...pagination,
-          current,
-          pageSize: size,
-        })}
-      />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '20px',
+        }}
+      >
+        <Pagination
+          {...pagination}
+          showSizeChanger
+          pageSizeOptions={['20', '50', '100', '200']}
+          onChange={(page, pageSize) => setPagination({
+            ...pagination,
+            current: page,
+            pageSize,
+          })}
+          onShowSizeChange={(current, size) => setPagination({
+            ...pagination,
+            current,
+            pageSize: size,
+          })}
+        />
+      </div>
     </div>
   );
 }
