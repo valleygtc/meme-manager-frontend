@@ -29,6 +29,10 @@
     background-color: #cccccc;
 }
 
+.imageBox {
+    border: 1px solid #eeeeee;
+}
+
 .imageBox:hover {
-    border: 1px solid black;
+    border-color: black;
 }
