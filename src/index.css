@@ -17,12 +17,16 @@
     opacity: 0.5;
 }
 
-.tag:hover {
-    background-color: DeepSkyBlue;
+.tag {
+    background-color: #eeeeee;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
 }
 
-.tag:focus {
-    background-color: DeepSkyBlue;
+.tag:hover {
+    background-color: #cccccc;
 }
 
 .imageBox:hover {

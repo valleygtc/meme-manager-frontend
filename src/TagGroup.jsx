@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Tag,
   Dropdown,
   Menu,
   Modal
@@ -29,7 +28,12 @@ export default function TagGroup({
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+      }}
+    >
       {tags.map((t) => {
         return (
           <Dropdown
@@ -46,7 +50,9 @@ export default function TagGroup({
             trigger={['contextMenu']}
             onContextMenu={(e) => e.stopPropagation()}
           >
-            <Tag className="tag">{t}</Tag>
+            <div className="tag">
+              {t}
+            </div>
           </Dropdown>
         )})}
     </div>
