@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Select } from 'antd';
+import { Input, Select, Button } from 'antd';
 
 const { Option } = Select;
 
@@ -9,6 +9,7 @@ const { Option } = Select;
  *   initialKey [String]
  *   initialValue [String]
  *   onSearch [callback]
+ *   onReset [callback]
  *
  * state:
  *   initialKey [String]
@@ -17,6 +18,7 @@ export default function SearchBar({
   initialKey,
   initialValue,
   onSearch,
+  onReset,
 }) {
   const [ key, setKey ] = useState(initialKey);
 
@@ -37,6 +39,13 @@ export default function SearchBar({
         onSearch={(value) => onSearch(key, value)}
         enterButton
       />
+      <div
+        style={{
+          marginLeft: '10px',
+        }}
+      >
+        <Button type="primary" onClick={onReset}>重置</Button>
+      </div>
     </div>
   );
 }

@@ -11,11 +11,13 @@ import SearchBar from './SearchBar.jsx';
  *   searchField [Object]: {key: , value: }
  *   onImageAdd [callback]
  *   onSearch [callback]
+ *   onReset [callback]
  */
 export default function FunctionBar({
   searchField,
   onImageAdd,
   onSearch,
+  onReset,
 }) {
   const WrappedAddForm = Form.create()(ImageAddForm);
 
@@ -34,6 +36,7 @@ export default function FunctionBar({
           initialKey={searchField.key}
           initialValue={searchField.value}
           onSearch={onSearch}
+          onReset={onReset}
         />
       </div>
       <div

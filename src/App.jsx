@@ -64,6 +64,17 @@ export default function App() {
     });
   }
 
+  const handleReset = () => {
+    setSearchField({
+      ...searchField,
+      value: '',
+    });
+    setPagination({
+      ...pagination,
+      current: 1,
+    });
+  }
+
   const handleImageAdd = async (values) => {
     console.log('App handleImageAdd: %o', { values });
     const image = values['image'];
@@ -169,6 +180,7 @@ export default function App() {
             searchField={searchField}
             onImageAdd={handleImageAdd}
             onSearch={handleSearch}
+            onReset={handleReset}
           />
         </div>
         <ImageWall
