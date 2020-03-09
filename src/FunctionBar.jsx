@@ -4,6 +4,8 @@ import { Form, Button } from 'antd';
 import ImageAddForm from './ImageAddForm.jsx';
 import FormModalButton from './FormModalButton.jsx';
 import SearchBar from './SearchBar.jsx';
+import GroupSelect from './GroupSelect';
+import Group from 'antd/lib/input/Group';
 
 
 /**
@@ -27,9 +29,14 @@ export default function FunctionBar({
         display: 'flex',
       }}
     >
+      <div>
+        组：
+        <GroupSelect groups={['全部', 'Group1', 'Group2']} value={'全部'}/>
+      </div>
       <div
         style={{
           flexGrow: '1',
+          marginLeft: '100px',
         }}
       >
         <SearchBar
