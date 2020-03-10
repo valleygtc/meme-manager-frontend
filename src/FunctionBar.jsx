@@ -5,18 +5,23 @@ import ImageAddForm from './ImageAddForm.jsx';
 import FormModalButton from './FormModalButton.jsx';
 import SearchBar from './SearchBar.jsx';
 import GroupSelect from './GroupSelect';
-import Group from 'antd/lib/input/Group';
 
 
 /**
  * props:
+ *   groups [Array[String]]
+ *   group [String]
  *   searchField [Object]: {key: , value: }
+ *   onGroupSelect [callback]
  *   onImageAdd [callback]
  *   onSearch [callback]
  *   onReset [callback]
  */
 export default function FunctionBar({
+  groups,
+  group,
   searchField,
+  onGroupSelect,
   onImageAdd,
   onSearch,
   onReset,
@@ -31,7 +36,11 @@ export default function FunctionBar({
     >
       <div>
         组：
-        <GroupSelect groups={['全部', 'Group1', 'Group2']} value={'全部'}/>
+        <GroupSelect
+          groups={groups}
+          value={group}
+          onGroupSelect={onGroupSelect}
+        />
       </div>
       <div
         style={{

@@ -7,10 +7,13 @@ const { Option } = Select;
 /**
  * props:
  *   groups [Array[String]]
+ *   value [String]
+ *   onGroupSelect [callback]
  */
 export default function GroupSelect({
   groups,
   value,
+  onGroupSelect,
 }) {
   return (
     <Select
@@ -19,6 +22,7 @@ export default function GroupSelect({
       }}
       placeholder="group"
       value={value}
+      onSelect={onGroupSelect}
       dropdownRender={(menu) => (
         <div>
           {menu}

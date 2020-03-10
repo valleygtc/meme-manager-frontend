@@ -22,13 +22,29 @@ export default function App() {
     key: 'tag',
     value: '',
   });
+  const [ groups, setGroups ] = useState(['all']);
+  const [ group, setGroup ] = useState('all');
 
   const refresh = async () => {
     console.log('App: handle refresh');
+    // fetch group
+    const gresp = await get(`${BACKEND_PREFIX}/api/groups/`);
+    if (gresp.status !== 200) {
+      message.error('网络异常，刷新失败');
+      console.error('Error: %o', { gresp });
+      return ;
+    }
+
+    const grespJSON = await gresp.json();
+    console.log('App fetch group: receive resp: %o', { grespJSON });
+    setGroups(['all', ...grespJSON.data]);
+
+    // fetch images
     const params = {
       page: pagination.current,
       per_page: pagination.pageSize,
       [searchField.key]: searchField.value,
+      group: group === 'all' ? '' : group,
     }
     const resp = await get(`${BACKEND_PREFIX}/api/images/`, params);
     if (resp.status !== 200) {
@@ -38,7 +54,7 @@ export default function App() {
     }
 
     const respJSON = await resp.json();
-    console.log('App: receive resp: %o', { respJSON });
+    console.log('App fetch images: receive resp: %o', { respJSON });
     setImageMetaDatas(respJSON.data);
     setPagination({
       ...pagination,
@@ -51,7 +67,7 @@ export default function App() {
 
   useEffect(() => {
     refresh();
-  }, [pagination.current, pagination.pageSize, searchField])
+  }, [pagination.current, pagination.pageSize, searchField, group])
 
   const handleSearch = (key, value) => {
     setPagination({
@@ -177,7 +193,10 @@ export default function App() {
           }}
         >
           <FunctionBar
+            groups={groups}
+            group={group}
             searchField={searchField}
+            onGroupSelect={setGroup}
             onImageAdd={handleImageAdd}
             onSearch={handleSearch}
             onReset={handleReset}
