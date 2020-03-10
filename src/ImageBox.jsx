@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Card,
   Dropdown,
   Menu,
   Modal,
@@ -14,7 +13,6 @@ import FormModalButton from './FormModalButton.jsx';
 
 const { confirm } = Modal;
 const { BACKEND_PREFIX } = config;
-const { Meta } = Card;
 
 
 /**
