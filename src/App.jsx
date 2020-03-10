@@ -93,6 +93,65 @@ export default function App() {
     refresh();
   }, [pagination.current, pagination.pageSize, searchField, group])
 
+  const handleGroupAdd = async (values) => {
+    console.log('App handleGroupAdd: %o', { values });
+    const name = values['name'];
+    const body = {
+      name,
+    }
+    console.log('App POST body: %o', body)
+    const resp = await post(`${BACKEND_PREFIX}/api/groups/add`, body);
+    if (resp.status !== 200) {
+      message.error('网络异常，添加组失败');
+      console.error('Error: %o', { resp });
+      return ;
+    }
+
+    message.success('添加组成功');
+    console.log('Success: %o', { resp });
+    refresh();
+    return ;
+  }
+
+  const handleGroupDelete = async (name) => {
+    console.log('App handleGroupAdd: %o', { name });
+    const body = {
+      name,
+    }
+    console.log('App POST body: %o', body)
+    const resp = await post(`${BACKEND_PREFIX}/api/groups/delete`, body);
+    if (resp.status !== 200) {
+      message.error('网络异常，删除组失败');
+      console.error('Error: %o', { resp });
+      return ;
+    }
+
+    message.success('删除组成功');
+    console.log('Success: %o', { resp });
+    refresh();
+    return ;
+  }
+
+  const handleGroupRename = async (old, new_) => {
+    console.log('App handleGroupRename: %o', { old, new_ });
+    const body = {
+      name: old,
+      new_name: new_,
+    }
+    console.log('App POST body: %o', body)
+    const resp = await post(`${BACKEND_PREFIX}/api/groups/update`, body);
+    if (resp.status !== 200) {
+      message.error('网络异常，重命名组失败');
+      console.error('Error: %o', { resp });
+      return ;
+    }
+
+    message.success('重命名组成功');
+    console.log('Success: %o', { resp });
+    refresh();
+    return ;
+  }
+
   const handleSearch = (key, value) => {
     setPagination({
       ...pagination,
@@ -221,6 +280,7 @@ export default function App() {
             group={group}
             searchField={searchField}
             onGroupSelect={setGroup}
+            onGroupAdd={handleGroupAdd}
             onImageAdd={handleImageAdd}
             onSearch={handleSearch}
             onReset={handleReset}

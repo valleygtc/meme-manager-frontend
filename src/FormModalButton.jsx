@@ -18,6 +18,7 @@ export default function FormModalButton({
   const [visible, setVisible] = useState(false);
 
   const showModal = () => {
+    console.log('click FormModalButton Button')
     setVisible(true);
   };
 

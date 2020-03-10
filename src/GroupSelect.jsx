@@ -1,5 +1,13 @@
 import React from 'react';
-import { Select, Divider, Button } from 'antd';
+import {
+  Select,
+  Divider,
+  Button,
+  Form
+} from 'antd';
+
+import FormModalButton from './FormModalButton.jsx';
+import GroupAddForm from './GroupAddForm.jsx';
 
 const { Option } = Select;
 
@@ -9,12 +17,16 @@ const { Option } = Select;
  *   groups [Array[String]]
  *   value [String]
  *   onGroupSelect [callback]
+ *   onGroupAdd [callback]
  */
 export default function GroupSelect({
   groups,
   value,
   onGroupSelect,
+  onGroupAdd,
 }) {
+  const WrappedAddForm = Form.create()(GroupAddForm);
+
   return (
     <Select
       style={{
@@ -36,7 +48,12 @@ export default function GroupSelect({
             }}
           >
             <Button size={'small'}>编辑</Button>
-            <Button size={'small'}>新建</Button>
+            <FormModalButton
+              buttonItem={(<Button size={'small'}>新建</Button>)}
+              title="添加组"
+              WrappedForm={WrappedAddForm}
+              onSubmit={onGroupAdd}
+            />
           </div>
         </div>
       )}

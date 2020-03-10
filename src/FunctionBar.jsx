@@ -13,6 +13,7 @@ import GroupSelect from './GroupSelect';
  *   group [String]
  *   searchField [Object]: {key: , value: }
  *   onGroupSelect [callback]
+ *   onGroupAdd [callback]
  *   onImageAdd [callback]
  *   onSearch [callback]
  *   onReset [callback]
@@ -22,6 +23,7 @@ export default function FunctionBar({
   group,
   searchField,
   onGroupSelect,
+  onGroupAdd,
   onImageAdd,
   onSearch,
   onReset,
@@ -40,6 +42,7 @@ export default function FunctionBar({
           groups={groups}
           value={group}
           onGroupSelect={onGroupSelect}
+          onGroupAdd={onGroupAdd}
         />
       </div>
       <div
