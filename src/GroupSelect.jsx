@@ -46,6 +46,11 @@ export default function GroupSelect({
               justifyContent: 'space-between',
               padding: '8px',
             }}
+            onMouseDown={(e) => {
+              // 如果不加这个，Button 按钮点击就没有用，这是个 bug，见：https://github.com/ant-design/ant-design/issues/13504
+              // antd 4.x 就没有这个问题了。等升级 4.x 后修改这里的实现。
+              e.preventDefault()
+            }}
           >
             <Button size={'small'}>编辑</Button>
             <FormModalButton

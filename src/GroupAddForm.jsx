@@ -40,20 +40,24 @@ export default function GroupAddForm({
     },
   };
 
+  // 如果不加这个最外层的 div stopPropagation，表单里的 Input 就点不了。应该是外层 ononMouseDown 捕获后 e.preventDefault 的原因。
+  // antd 4.x 就没有这个问题了。等升级 4.x 后修改这里的实现。
   return (
-    <Form {...formItemLayout} onSubmit={handleSubmit}>
-      <Form.Item label="组名">
-        {form.getFieldDecorator('name', {
-          rules: [{ required: true, message: '必须输入组名' }],
-        })(
-          <Input placeholder="Group"/>
-        )}
-      </Form.Item>
-      <Form.Item {...formItemLayoutWithOutLabel}>
-        <Button type="primary" htmlType="submit">
-          提交
-        </Button>
-      </Form.Item>
-    </Form>
+    <div onMouseDown={(e) => e.stopPropagation()}>
+      <Form {...formItemLayout} onSubmit={handleSubmit}>
+        <Form.Item label="组名">
+          {form.getFieldDecorator('name', {
+            rules: [{ required: true, message: '必须输入组名' }],
+          })(
+            <Input placeholder="Group"/>
+          )}
+        </Form.Item>
+        <Form.Item {...formItemLayoutWithOutLabel}>
+          <Button type="primary" htmlType="submit">
+            提交
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 }
