@@ -96,18 +96,24 @@ export default function App() {
   const handleGroupAdd = async (values) => {
     console.log('App handleGroupAdd: %o', { values });
     const name = values['name'];
+
+    if (groups.includes(name)) {
+      message.warn(`新建组失败：${name}组已存在`);
+      return
+    }
+
     const body = {
       name,
     }
     console.log('App POST body: %o', body)
     const resp = await post(`${BACKEND_PREFIX}/api/groups/add`, body);
     if (resp.status !== 200) {
-      message.error('网络异常，添加组失败');
+      message.error('网络异常，新建组失败');
       console.error('Error: %o', { resp });
       return ;
     }
 
-    message.success('添加组成功');
+    message.success('新建组成功');
     console.log('Success: %o', { resp });
     refresh();
     return ;
