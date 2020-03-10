@@ -98,7 +98,7 @@ export default function App() {
     const name = values['name'];
 
     if (groups.includes(name)) {
-      message.warn(`新建组失败：${name}组已存在`);
+      message.warn(`新建组失败：“${name}”组已存在`);
       return
     }
 
@@ -113,7 +113,7 @@ export default function App() {
       return ;
     }
 
-    message.success('新建组成功');
+    message.success(`成功新建组“${name}”`);
     console.log('Success: %o', { resp });
     refresh();
     return ;
@@ -132,7 +132,7 @@ export default function App() {
       return ;
     }
 
-    message.success('删除组成功');
+    message.success(`成功删除组“${name}”`);
     console.log('Success: %o', { resp });
     refresh();
     return ;
@@ -152,7 +152,7 @@ export default function App() {
       return ;
     }
 
-    message.success('重命名组成功');
+    message.success(`成功重命名组“${old}”为“${new_}”`);
     console.log('Success: %o', { resp });
     refresh();
     return ;
@@ -287,6 +287,7 @@ export default function App() {
             searchField={searchField}
             onGroupSelect={setGroup}
             onGroupAdd={handleGroupAdd}
+            onGroupDelete={handleGroupDelete}
             onImageAdd={handleImageAdd}
             onSearch={handleSearch}
             onReset={handleReset}

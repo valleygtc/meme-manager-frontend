@@ -8,6 +8,7 @@ import {
 
 import FormModalButton from './FormModalButton.jsx';
 import GroupAddForm from './GroupAddForm.jsx';
+import GroupUpdateModalButton from './GroupUpdateModalButton.jsx';
 
 const { Option } = Select;
 
@@ -18,12 +19,14 @@ const { Option } = Select;
  *   value [String]
  *   onGroupSelect [callback]
  *   onGroupAdd [callback]
+ *   onGroupDelete [callback]
  */
 export default function GroupSelect({
   groups,
   value,
   onGroupSelect,
   onGroupAdd,
+  onGroupDelete,
 }) {
   const WrappedAddForm = Form.create()(GroupAddForm);
 
@@ -47,12 +50,15 @@ export default function GroupSelect({
               padding: '8px',
             }}
             onMouseDown={(e) => {
-              // 如果不加这个，Button 按钮点击就没有用，这是个 bug，见：https://github.com/ant-design/ant-design/issues/13504
+              // TODO：如果不加这个，Button 按钮点击就没有用，这是个 bug，见：https://github.com/ant-design/ant-design/issues/13504
               // antd 4.x 就没有这个问题了。等升级 4.x 后修改这里的实现。
               e.preventDefault()
             }}
           >
-            <Button size={'small'}>编辑</Button>
+            <GroupUpdateModalButton
+              groups={groups}
+              onGroupDelete={onGroupDelete}
+            />
             <FormModalButton
               buttonItem={(<Button size={'small'}>新建</Button>)}
               title="添加组"

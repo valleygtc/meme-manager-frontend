@@ -14,6 +14,7 @@ import GroupSelect from './GroupSelect';
  *   searchField [Object]: {key: , value: }
  *   onGroupSelect [callback]
  *   onGroupAdd [callback]
+ *   onGroupDelete [callback]
  *   onImageAdd [callback]
  *   onSearch [callback]
  *   onReset [callback]
@@ -24,6 +25,7 @@ export default function FunctionBar({
   searchField,
   onGroupSelect,
   onGroupAdd,
+  onGroupDelete,
   onImageAdd,
   onSearch,
   onReset,
@@ -43,6 +45,7 @@ export default function FunctionBar({
           value={group}
           onGroupSelect={onGroupSelect}
           onGroupAdd={onGroupAdd}
+          onGroupDelete={onGroupDelete}
         />
       </div>
       <div
