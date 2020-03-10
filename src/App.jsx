@@ -25,21 +25,23 @@ export default function App() {
   const [ groups, setGroups ] = useState(['all']);
   const [ group, setGroup ] = useState('all');
 
-  const refresh = async () => {
-    console.log('App: handle refresh');
-    // fetch group
-    const gresp = await get(`${BACKEND_PREFIX}/api/groups/`);
-    if (gresp.status !== 200) {
-      message.error('网络异常，刷新失败');
-      console.error('Error: %o', { gresp });
-      return ;
+  const fetchGroups = async () => {
+    const resp = await get(`${BACKEND_PREFIX}/api/groups/`);
+    if (resp.status !== 200) {
+      console.error('Error: %o', { resp });
+      throw new Error('resp status !== 200')
     }
 
-    const grespJSON = await gresp.json();
-    console.log('App fetch group: receive resp: %o', { grespJSON });
-    setGroups(['all', ...grespJSON.data]);
+    const respJSON = await resp.json();
+    console.log('App fetch group: receive resp: %o', { respJSON });
+    return respJSON.data;
+  }
 
-    // fetch images
+  const fetchImages = async (
+    pagination,
+    searchField,
+    group,
+  ) => {
     const params = {
       page: pagination.current,
       per_page: pagination.pageSize,
@@ -48,19 +50,41 @@ export default function App() {
     }
     const resp = await get(`${BACKEND_PREFIX}/api/images/`, params);
     if (resp.status !== 200) {
-      message.error('网络异常，刷新失败');
       console.error('Error: %o', { resp });
-      return ;
+      throw new Error('resp status !== 200')
     }
 
     const respJSON = await resp.json();
-    console.log('App fetch images: receive resp: %o', { respJSON });
-    setImageMetaDatas(respJSON.data);
+    console.log('App fetch imageMetaDatas: receive resp: %o', { respJSON });
+    return respJSON;
+  }
+
+  const refresh = async () => {
+    console.log('App: handle refresh');
+    // fetch group
+    let groups;
+    try {
+      groups = await fetchGroups();
+    } catch (e) {
+      message.error('网络异常，刷新失败');
+      return
+    }
+    setGroups(['all', ...groups]);
+
+    // fetch images
+    let imagesJSON;
+    try {
+      imagesJSON = await fetchImages(pagination, searchField, group);
+    } catch (e) {
+      message.error('网络异常，刷新失败');
+      return
+    }
+    setImageMetaDatas(imagesJSON.data);
     setPagination({
       ...pagination,
-      current: respJSON['pagination']['page'],
-      pageSize: respJSON['pagination']['per_page'],
-      total: respJSON['pagination']['total'],
+      current: imagesJSON['pagination']['page'],
+      pageSize: imagesJSON['pagination']['per_page'],
+      total: imagesJSON['pagination']['total'],
     });
     return ;
   }
