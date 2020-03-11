@@ -15,6 +15,7 @@ import GroupSelect from './GroupSelect';
  *   onGroupSelect [callback]
  *   onGroupAdd [callback]
  *   onGroupDelete [callback]
+ *   onGroupRename [callback]
  *   onImageAdd [callback]
  *   onSearch [callback]
  *   onReset [callback]
@@ -26,6 +27,7 @@ export default function FunctionBar({
   onGroupSelect,
   onGroupAdd,
   onGroupDelete,
+  onGroupRename,
   onImageAdd,
   onSearch,
   onReset,
@@ -46,6 +48,7 @@ export default function FunctionBar({
           onGroupSelect={onGroupSelect}
           onGroupAdd={onGroupAdd}
           onGroupDelete={onGroupDelete}
+          onGroupRename={onGroupRename}
         />
       </div>
       <div

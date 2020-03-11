@@ -288,6 +288,7 @@ export default function App() {
             onGroupSelect={setGroup}
             onGroupAdd={handleGroupAdd}
             onGroupDelete={handleGroupDelete}
+            onGroupRename={handleGroupRename}
             onImageAdd={handleImageAdd}
             onSearch={handleSearch}
             onReset={handleReset}

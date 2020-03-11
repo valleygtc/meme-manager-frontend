@@ -20,6 +20,7 @@ const { Option } = Select;
  *   onGroupSelect [callback]
  *   onGroupAdd [callback]
  *   onGroupDelete [callback]
+ *   onGroupRename [callback]
  */
 export default function GroupSelect({
   groups,
@@ -27,6 +28,7 @@ export default function GroupSelect({
   onGroupSelect,
   onGroupAdd,
   onGroupDelete,
+  onGroupRename,
 }) {
   const WrappedAddForm = Form.create()(GroupAddForm);
 
@@ -58,6 +60,7 @@ export default function GroupSelect({
             <GroupEditModalButton
               groups={groups}
               onGroupDelete={onGroupDelete}
+              onGroupRename={onGroupRename}
             />
             <FormModalButton
               buttonItem={(<Button size={'small'}>新建</Button>)}
