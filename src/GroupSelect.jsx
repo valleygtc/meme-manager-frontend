@@ -8,7 +8,7 @@ import {
 
 import FormModalButton from './FormModalButton.jsx';
 import GroupAddForm from './GroupAddForm.jsx';
-import GroupUpdateModalButton from './GroupUpdateModalButton.jsx';
+import GroupEditModalButton from './GroupEditModalButton.jsx';
 
 const { Option } = Select;
 
@@ -55,7 +55,7 @@ export default function GroupSelect({
               e.preventDefault()
             }}
           >
-            <GroupUpdateModalButton
+            <GroupEditModalButton
               groups={groups}
               onGroupDelete={onGroupDelete}
             />

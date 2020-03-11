@@ -12,7 +12,7 @@ import {
  *   groups [Array[String]]
  *   onGroupDelete [callback]
  */
-export default function GroupUpdateModalButton({
+export default function GroupEditModalButton({
   groups,
   onGroupDelete,
 }) {
@@ -43,7 +43,7 @@ export default function GroupUpdateModalButton({
         onCancel={handleCancel}
         footer={null}
       >
-        <UpdateBoard
+        <EditBoard
           groups={groups}
           onGroupDelete={handleGroupDelete}
         />
@@ -58,7 +58,7 @@ export default function GroupUpdateModalButton({
  *   groups [Array[String]]
  *   onGroupDelete [callback]
  */
-function UpdateBoard({
+function EditBoard({
   groups,
   onGroupDelete,
 }) {
@@ -88,7 +88,7 @@ function UpdateBoard({
               size="small"
             >重命名</Button>
             <Popconfirm
-              title={`确定删除组：${g}？注意，所有组内图片也会一并删除。`}
+              title={`确定删除组“${g}”？注意，所有组内图片也会一并删除。`}
               onConfirm={() => onGroupDelete(g)}
               okText="Yes"
               cancelText="No"
