@@ -9,15 +9,20 @@ import ImageBox from './ImageBox.jsx';
  *     "id": [Number],
  *     "img_type": [String],
  *     "tags": [Array[String]],
+ *     "group": [String],
  *     "create_at": [String],
  *   }
+ *   groups [Array[String]]
  *   onImageDelete [callback]
+ *   onImageMove [callback]
  *   onTagsAdd [callback]
  *   onTagDelete [callback]
  */
 export default function ImageWall({
   imageMetaDatas,
+  groups,
   onImageDelete,
+  onImageMove,
   onTagsAdd,
   onTagDelete,
 }) {
@@ -35,7 +40,9 @@ export default function ImageWall({
           <ImageBox
             key={m['id']}
             metadata={m}
+            groups={groups}
             onImageDelete={onImageDelete}
+            onImageMove={onImageMove}
             onTagsAdd={onTagsAdd}
             onTagDelete={onTagDelete}
           />

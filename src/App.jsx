@@ -23,7 +23,7 @@ export default function App() {
     value: '',
   });
   const [ groups, setGroups ] = useState(['all']);
-  const [ group, setGroup ] = useState('all');
+  const [ currentGroup, setCurrentGroup ] = useState('all');
 
   const fetchGroups = async () => {
     const resp = await get(`${BACKEND_PREFIX}/api/groups/`);
@@ -74,7 +74,7 @@ export default function App() {
     // fetch images
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(pagination, searchField, group);
+      imagesJSON = await fetchImages(pagination, searchField, currentGroup);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
@@ -91,7 +91,7 @@ export default function App() {
 
   useEffect(() => {
     refresh();
-  }, [pagination.current, pagination.pageSize, searchField, group])
+  }, [pagination.current, pagination.pageSize, searchField, currentGroup])
 
   const handleGroupAdd = async (values) => {
     console.log('App handleGroupAdd: %o', { values });
@@ -220,6 +220,25 @@ export default function App() {
     return ;
   }
 
+  const handleImageMove = async (imageId, group) => {
+    console.log('App handleImageMoveTo: %o', { imageId, group });
+    const body = {
+      id: imageId,
+      group: group === 'all' ? null : group,
+    }
+    const resp = await post(`${BACKEND_PREFIX}/api/images/update`, body);
+    if (resp.status !== 200) {
+      message.error('网络异常，移动图片失败');
+      console.error('Error: %o', { resp });
+      return ;
+    }
+
+    message.success(`成功移动图片至组“${group}”`);
+    console.log('Success: %o', { resp });
+    refresh();
+    return ;
+  }
+
   const handleTagsAdd = async (imageId, tags) => {
     console.log('App handleTagsAdd: %o', { imageId, tags });
     const body = {
@@ -283,9 +302,9 @@ export default function App() {
         >
           <FunctionBar
             groups={groups}
-            group={group}
+            currentGroup={currentGroup}
             searchField={searchField}
-            onGroupSelect={setGroup}
+            onGroupSelect={setCurrentGroup}
             onGroupAdd={handleGroupAdd}
             onGroupDelete={handleGroupDelete}
             onGroupRename={handleGroupRename}
@@ -296,7 +315,9 @@ export default function App() {
         </div>
         <ImageWall
           imageMetaDatas={imageMetaDatas}
+          groups={groups}
           onImageDelete={handleImageDelete}
+          onImageMove={handleImageMove}
           onTagsAdd={handleTagsAdd}
           onTagDelete={handleTagDelete}
         />

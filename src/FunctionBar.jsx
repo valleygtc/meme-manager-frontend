@@ -10,7 +10,7 @@ import GroupSelect from './GroupSelect';
 /**
  * props:
  *   groups [Array[String]]
- *   group [String]
+ *   currentGroup [String]
  *   searchField [Object]: {key: , value: }
  *   onGroupSelect [callback]
  *   onGroupAdd [callback]
@@ -22,7 +22,7 @@ import GroupSelect from './GroupSelect';
  */
 export default function FunctionBar({
   groups,
-  group,
+  currentGroup,
   searchField,
   onGroupSelect,
   onGroupAdd,
@@ -44,7 +44,7 @@ export default function FunctionBar({
         组：
         <GroupSelect
           groups={groups}
-          value={group}
+          currentGroup={currentGroup}
           onGroupSelect={onGroupSelect}
           onGroupAdd={onGroupAdd}
           onGroupDelete={onGroupDelete}

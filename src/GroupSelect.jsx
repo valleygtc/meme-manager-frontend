@@ -16,7 +16,7 @@ const { Option } = Select;
 /**
  * props:
  *   groups [Array[String]]
- *   value [String]
+ *   currentGroup [String]
  *   onGroupSelect [callback]
  *   onGroupAdd [callback]
  *   onGroupDelete [callback]
@@ -24,7 +24,7 @@ const { Option } = Select;
  */
 export default function GroupSelect({
   groups,
-  value,
+  currentGroup,
   onGroupSelect,
   onGroupAdd,
   onGroupDelete,
@@ -38,7 +38,7 @@ export default function GroupSelect({
         minWidth: 120,
       }}
       placeholder="group"
-      value={value}
+      value={currentGroup}
       onSelect={onGroupSelect}
       dropdownRender={(menu) => (
         <div>

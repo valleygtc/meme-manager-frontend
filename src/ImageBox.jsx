@@ -10,6 +10,7 @@ import TagGroup from './TagGroup.jsx';
 import TagsAddForm from './TagsAddForm.jsx';
 import config from './config';
 import FormModalButton from './FormModalButton.jsx';
+import ImageMoveModalButton from './ImageMoveModalButton.jsx';
 
 const { confirm } = Modal;
 const { BACKEND_PREFIX } = config;
@@ -21,15 +22,20 @@ const { BACKEND_PREFIX } = config;
  *     "id": [Number],
  *     "img_type": [String],
  *     "tags": [Array[String]],
+ *     "group": [String],
  *     "create_at": [String],
  *   }
+ *   groups [Array[String]]
  *   onImageDelete [callback]
+ *   onImageMove [callback]
  *   onTagsAdd [callback]
  *   onTagDelete [callback]
  */
 export default function ImageBox({
   metadata,
+  groups,
   onImageDelete,
+  onImageMove,
   onTagsAdd,
   onTagDelete,
 }){
@@ -65,6 +71,13 @@ export default function ImageBox({
           title="添加标签"
           WrappedForm={WrappedTagsAddForm}
           onSubmit={(tags) => onTagsAdd(metadata['id'], tags)}
+        />
+      </Menu.Item>
+      <Menu.Item>
+        <ImageMoveModalButton
+          groups={groups}
+          group={metadata['group'] || 'all'}
+          onImageMove={(group) => onImageMove(metadata['id'], group)}
         />
       </Menu.Item>
       <Menu.Item>
