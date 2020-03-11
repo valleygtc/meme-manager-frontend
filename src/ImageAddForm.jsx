@@ -1,7 +1,5 @@
 import React from 'react';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Button, Select } from 'antd';
+import { Form, Button, Select } from 'antd';
 
 import Upload from './Upload.jsx';
 import TagsInput from './TagsInput.jsx';
@@ -10,73 +8,65 @@ const { Option } = Select;
 
 /**
  * props:
- *   form: Form.create包装自带的form。
  *   groups [Array[String]]
  *   onSubmit [callback]
  */
 export default function ImageAddForm({
-  form,
   groups,
   onSubmit,
 }) {
-  const handleSubmit = e => {
-    e.preventDefault();
-    form.validateFields(async (err, values) => {
-      if (err) {
-        console.error(err);
-      } else {
-          onSubmit(values);
-          form.resetFields();
-      }
-    });
+  const [form] = Form.useForm();
+  
+  const onFinish = (values) => {
+    onSubmit(values);
+    // FIXME: 这里的这个没有效果，还是报错啊。
+    form.resetFields();
   };
 
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 4 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 16 },
-    },
+  const onFinishFailed = (errorInfo) => {
+    console.error(errorInfo);
   };
-  const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-      xs: { span: 24, offset: 0 },
-      sm: { span: 22, offset: 4 },
-    },
+
+  const layout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 16 },
+  };
+  const tailLayout = {
+    wrapperCol: { offset: 4, span: 16 },
   };
 
   return (
-    <Form {...formItemLayout} onSubmit={handleSubmit}>
-      <Form.Item label="图片">
-        {form.getFieldDecorator('image', {
-          rules: [{ required: true, message: '必须选择一个图片' }]
-        })(
-          <Upload />
-        )}
+    <Form
+      {...layout}
+      initialValues={{
+        group: 'all',
+        tags: [''],
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+    >
+      <Form.Item
+        label="图片"
+        name="image"
+        rules={[{ required: true, message: '必须选择一个图片' }]}
+      >
+        <Upload />
       </Form.Item>
-      <Form.Item label="组">
-        {form.getFieldDecorator('group', {
-          initialValue: 'all',
-          rules: [{ required: true, message: '必须选择一个组' }],
-        })(
-          <Select>
-            {groups.map((g) => (
-              <Option key={g} value={g}>{g}</Option>
-            ))}
-          </Select>
-        )}
+      <Form.Item
+        label="组"
+        name="group"
+        rules={[{ required: true, message: '必须选择一个组' }]}
+      >
+        <Select>
+          {groups.map((g) => (
+            <Option key={g} value={g}>{g}</Option>
+          ))}
+        </Select>
       </Form.Item>
-      <Form.Item label="标签">
-        {form.getFieldDecorator('tags', {
-          initialValue: [''],
-        })(
-          <TagsInput />
-        )}
+      <Form.Item label="标签" name="tags">
+        <TagsInput />
       </Form.Item>
-      <Form.Item {...formItemLayoutWithOutLabel}>
+      <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           提交
         </Button>

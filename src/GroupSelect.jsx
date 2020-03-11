@@ -1,6 +1,4 @@
 import React from 'react';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Select, Divider, Button } from 'antd';
 
 import FormModalButton from './FormModalButton.jsx';
@@ -27,8 +25,6 @@ export default function GroupSelect({
   onGroupDelete,
   onGroupRename,
 }) {
-  const WrappedAddForm = Form.create()(GroupAddForm);
-
   return (
     <Select
       style={{
@@ -48,11 +44,6 @@ export default function GroupSelect({
               justifyContent: 'space-between',
               padding: '8px',
             }}
-            onMouseDown={(e) => {
-              // TODO：如果不加这个，Button 按钮点击就没有用，这是个 bug，见：https://github.com/ant-design/ant-design/issues/13504
-              // antd 4.x 就没有这个问题了。等升级 4.x 后修改这里的实现。
-              e.preventDefault()
-            }}
           >
             <GroupEditModalButton
               groups={groups}
@@ -62,7 +53,7 @@ export default function GroupSelect({
             <FormModalButton
               buttonItem={(<Button size={'small'}>新建</Button>)}
               title="添加组"
-              wrappedForm={<WrappedAddForm />}
+              wrappedForm={<GroupAddForm />}
               onSubmit={onGroupAdd}
             />
           </div>

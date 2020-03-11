@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Modal } from 'antd';
 
 import ImageMoveForm from './ImageMoveForm.jsx';
@@ -31,7 +29,6 @@ export default function ImageMoveModalButton({
     onImageMove(group);
   }
 
-  const WrappedImageMoveForm = Form.create()(ImageMoveForm);
   return (
     <div>
       <div onClick={showModal}>移至组</div>
@@ -41,7 +38,7 @@ export default function ImageMoveModalButton({
         onCancel={handleCancel}
         footer={null}
       >
-        <WrappedImageMoveForm
+        <ImageMoveForm
           groups={groups}
           group={group}
           onSubmit={handleImageMove}

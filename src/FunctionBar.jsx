@@ -1,6 +1,4 @@
 import React from 'react';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Button } from 'antd';
 
 import ImageAddForm from './ImageAddForm.jsx';
@@ -34,8 +32,6 @@ export default function FunctionBar({
   onSearch,
   onReset,
 }) {
-  const WrappedAddForm = Form.create()(ImageAddForm);
-
   return (
     <div
       style={{
@@ -74,7 +70,7 @@ export default function FunctionBar({
         <FormModalButton
           buttonItem={(<Button type="primary">添加</Button>)}
           title="添加图片"
-          wrappedForm={<WrappedAddForm  groups={groups}/>}
+          wrappedForm={<ImageAddForm  groups={groups}/>}
           onSubmit={onImageAdd}
         />
       </div>

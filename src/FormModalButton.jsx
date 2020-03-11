@@ -35,6 +35,7 @@ export default function FormModalButton({
     <div>
       <buttonItem.type {...buttonItem.props} onClick={showModal} />
       <Modal
+        forceRender
         title={title}
         visible={visible}
         onCancel={handleCancel}

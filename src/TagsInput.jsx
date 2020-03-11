@@ -69,12 +69,14 @@ export default class TagsInput extends React.Component {
           <Input
             value={t}
             placeholder="Tag"
-            style={{ width: '80%' }}
+            style={{
+              width: '80%',
+              marginBottom: '10px',
+            }}
             onChange={(event) => { this.handleInputChange(index, event) }} />
           {tags.length > 1 ? (
             <MinusCircleOutlined
               className="dynamic-delete-button"
-              disabled={tags.length === 1}
               onClick={() => this.handleOptionRemove(index)} />
           ) : null}
         </div>

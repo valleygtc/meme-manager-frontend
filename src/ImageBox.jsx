@@ -1,13 +1,15 @@
 import React from 'react';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Dropdown, Menu, Modal } from 'antd';
+import {
+  Dropdown,
+  Menu,
+  Modal,
+} from 'antd';
 
 import TagGroup from './TagGroup.jsx';
 import TagsAddForm from './TagsAddForm.jsx';
-import config from './config';
 import FormModalButton from './FormModalButton.jsx';
 import ImageMoveModalButton from './ImageMoveModalButton.jsx';
+import config from './config';
 
 const { confirm } = Modal;
 const { BACKEND_PREFIX } = config;
@@ -53,8 +55,6 @@ export default function ImageBox({
     });
   }
 
-  const WrappedTagsAddForm = Form.create()(TagsAddForm);
-
   const menu = (
     <Menu>
       <Menu.Item>
@@ -66,7 +66,7 @@ export default function ImageBox({
         <FormModalButton
           buttonItem={<div>添加标签</div>}
           title="添加标签"
-          wrappedForm={<WrappedTagsAddForm />}
+          wrappedForm={<TagsAddForm />}
           onSubmit={(tags) => onTagsAdd(metadata['id'], tags)}
         />
       </Menu.Item>

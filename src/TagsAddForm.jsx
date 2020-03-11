@@ -1,59 +1,50 @@
 import React from 'react';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Button } from 'antd';
+import { Form, Button } from 'antd';
 
 import TagsInput from './TagsInput.jsx';
 
 
 /**
  * props:
- *   form: Form.create包装自带的form。
  *   onSubmit [callback]
  */
 export default function TagsAddForm({
-  form,
   onSubmit,
 }) {
-  const handleSubmit = e => {
-    e.preventDefault();
-    form.validateFields(async (err, values) => {
-      if (err) {
-        console.error(err);
-      } else {
-          onSubmit(values['tags']);
-          form.resetFields();
-      }
-    });
+  // FIXME: 这里 form.resetFields 无效。照文档里要求的给 Modal 加上 forceRender 也没用。甚至给 Dropdown 加上 forceRender 也没用。控制台会报错。
+  // const [form] = Form.useForm();
+
+  const onFinish = (values) => {
+    onSubmit(values['tags']);
+    // form.resetFields();
+    console.log('Success:', values);
   };
 
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 4 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 16 },
-    },
+  const onFinishFailed = (errorInfo) => {
+    console.error('Failed:', errorInfo);
   };
-  const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-      xs: { span: 24, offset: 0 },
-      sm: { span: 22, offset: 4 },
-    },
+
+  const layout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 20 },
+  };
+  const tailLayout = {
+    wrapperCol: { offset: 4, span: 20 },
   };
 
   return (
-    <Form {...formItemLayout} onSubmit={handleSubmit}>
-      <Form.Item label="标签">
-        {form.getFieldDecorator('tags', {
-          initialValue: [''],
-        })(
-          <TagsInput />
-        )}
+    <Form
+      {...layout}
+      initialValues={{
+        tags: [''],
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+    >
+      <Form.Item label="标签" name="tags">
+        <TagsInput />
       </Form.Item>
-      <Form.Item {...formItemLayoutWithOutLabel}>
+      <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           提交
         </Button>

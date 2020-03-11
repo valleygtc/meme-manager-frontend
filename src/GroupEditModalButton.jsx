@@ -89,10 +89,8 @@ function EditBoard({
     });
   }
 
-  // TODO：如果不加这个最外层的 div stopPropagation，表单里的 Input 就点不了。应该是外层 ononMouseDown 捕获后 e.preventDefault 的原因。
-  // antd 4.x 就没有这个问题了。等升级 4.x 后修改这里的实现。
   return (
-    <div onMouseDown={(e) => e.stopPropagation()}>
+    <div>
       {groups.map((g) => (
         <div
           style={{
