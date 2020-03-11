@@ -93,6 +93,14 @@ export default function App() {
     refresh();
   }, [pagination.current, pagination.pageSize, searchField, currentGroup])
 
+  const handleGroupSelect = (group) => {
+    setPagination({
+      ...pagination,
+      current: 1,
+    });
+    setCurrentGroup(group)
+  }
+
   const handleGroupAdd = async (values) => {
     console.log('App handleGroupAdd: %o', { values });
     const name = values['name'];
@@ -305,7 +313,7 @@ export default function App() {
             groups={groups}
             currentGroup={currentGroup}
             searchField={searchField}
-            onGroupSelect={setCurrentGroup}
+            onGroupSelect={handleGroupSelect}
             onGroupAdd={handleGroupAdd}
             onGroupDelete={handleGroupDelete}
             onGroupRename={handleGroupRename}
