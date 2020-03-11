@@ -1,10 +1,6 @@
 import React from 'react';
-
-import {
-  Input,
-  Button,
-  Icon
-} from 'antd';
+import { Input, Button } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 
 /** 自定义完全受控组件，受上级 Form 控制。
@@ -76,12 +72,10 @@ export default class TagsInput extends React.Component {
             style={{ width: '80%' }}
             onChange={(event) => { this.handleInputChange(index, event) }} />
           {tags.length > 1 ? (
-            <Icon
+            <MinusCircleOutlined
               className="dynamic-delete-button"
-              type="minus-circle-o"
               disabled={tags.length === 1}
-              onClick={() => this.handleOptionRemove(index)}
-            />
+              onClick={() => this.handleOptionRemove(index)} />
           ) : null}
         </div>
       );
@@ -91,7 +85,7 @@ export default class TagsInput extends React.Component {
       <div>
         {items}
         <Button type="dashed" onClick={this.handleOptionAdd}>
-          <Icon type="plus" /> Add Select Item
+          <PlusOutlined /> Add Select Item
         </Button>
       </div>
     );

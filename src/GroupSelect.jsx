@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-  Select,
-  Divider,
-  Button,
-  Form
-} from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Select, Divider, Button } from 'antd';
 
 import FormModalButton from './FormModalButton.jsx';
 import GroupAddForm from './GroupAddForm.jsx';

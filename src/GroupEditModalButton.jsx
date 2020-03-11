@@ -5,6 +5,7 @@ import {
   Input,
   Popconfirm,
 } from 'antd';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 
 /**
@@ -142,8 +143,8 @@ function EditBoard({
           {
             g !== 'all' && Object.keys(renamingGroups).includes(g) &&
             <>
-            <Button icon="check" onClick={() => onGroupRename(g, renamingGroups[g])} />
-            <Button icon="close" onClick={() => handleRenameCancle(g)}/>
+            <Button icon={<CheckOutlined />} onClick={() => onGroupRename(g, renamingGroups[g])} />
+            <Button icon={<CloseOutlined />} onClick={() => handleRenameCancle(g)}/>
             </>
           }
         </div>

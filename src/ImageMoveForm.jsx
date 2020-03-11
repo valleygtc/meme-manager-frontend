@@ -1,9 +1,7 @@
 import React from 'react';
-import {
-  Form,
-  Button,
-  Select,
-} from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Select } from 'antd';
 
 const { Option } = Select;
 

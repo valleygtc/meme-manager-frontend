@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Button, Input } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Input } from 'antd';
 
 
 /**

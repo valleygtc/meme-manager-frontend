@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-  Dropdown,
-  Menu,
-  Modal,
-  Form,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Dropdown, Menu, Modal } from 'antd';
 
 import TagGroup from './TagGroup.jsx';
 import TagsAddForm from './TagsAddForm.jsx';
