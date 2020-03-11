@@ -55,7 +55,6 @@ export default function ImageAddForm({
       <Form.Item label="标签">
         {form.getFieldDecorator('tags', {
           initialValue: [''],
-          rules: [{ required: true, message: '必须输入标签' }],
         })(
           <TagsInput />
         )}
