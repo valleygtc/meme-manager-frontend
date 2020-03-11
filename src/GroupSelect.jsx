@@ -65,7 +65,7 @@ export default function GroupSelect({
             <FormModalButton
               buttonItem={(<Button size={'small'}>新建</Button>)}
               title="添加组"
-              WrappedForm={WrappedAddForm}
+              wrappedForm={<WrappedAddForm />}
               onSubmit={onGroupAdd}
             />
           </div>

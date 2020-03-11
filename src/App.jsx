@@ -189,6 +189,7 @@ export default function App() {
       metadata: JSON.stringify({
         img_type: imageType,
         tags: values['tags'],
+        group: values['group'] === 'all' ? null : values['group'],
       })
     }
     console.log('App post body: %o', body);

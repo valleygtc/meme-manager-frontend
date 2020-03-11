@@ -69,7 +69,7 @@ export default function ImageBox({
         <FormModalButton
           buttonItem={<div>添加标签</div>}
           title="添加标签"
-          WrappedForm={WrappedTagsAddForm}
+          wrappedForm={<WrappedTagsAddForm />}
           onSubmit={(tags) => onTagsAdd(metadata['id'], tags)}
         />
       </Menu.Item>

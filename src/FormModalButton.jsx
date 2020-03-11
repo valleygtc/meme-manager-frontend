@@ -6,13 +6,13 @@ import { Modal } from 'antd';
  * props:
  *   buttonItem [Object]
  *   title [String]: 弹出的 Modal 的 title
- *   WrappedForm [Object]
+ *   wrappedForm [Object]
  *   onSubmit [callback]
  */
 export default function FormModalButton({
   buttonItem,
   title,
-  WrappedForm,
+  wrappedForm,
   onSubmit,
 }) {
   const [visible, setVisible] = useState(false);
@@ -40,7 +40,7 @@ export default function FormModalButton({
         onCancel={handleCancel}
         footer={null}
       >
-        <WrappedForm onSubmit={handleSubmit} />
+        <wrappedForm.type {...wrappedForm.props} onSubmit={handleSubmit} />
       </Modal>
     </div>
   );

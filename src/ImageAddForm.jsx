@@ -1,18 +1,25 @@
 import React from 'react';
-import { Form, Button } from 'antd';
+import {
+  Form,
+  Button,
+  Select,
+} from 'antd';
 
 import Upload from './Upload.jsx';
 import TagsInput from './TagsInput.jsx';
 
+const { Option } = Select;
 
 /**
  * props:
  *   form: Form.create包装自带的form。
+ *   groups [Array[String]]
  *   onSubmit [callback]
  */
 export default function ImageAddForm({
   form,
-  onSubmit
+  groups,
+  onSubmit,
 }) {
   const handleSubmit = e => {
     e.preventDefault();
@@ -50,6 +57,18 @@ export default function ImageAddForm({
           rules: [{ required: true, message: '必须选择一个图片' }]
         })(
           <Upload />
+        )}
+      </Form.Item>
+      <Form.Item label="组">
+        {form.getFieldDecorator('group', {
+          initialValue: 'all',
+          rules: [{ required: true, message: '必须选择一个组' }],
+        })(
+          <Select>
+            {groups.map((g) => (
+              <Option key={g} value={g}>{g}</Option>
+            ))}
+          </Select>
         )}
       </Form.Item>
       <Form.Item label="标签">

@@ -72,7 +72,7 @@ export default function FunctionBar({
         <FormModalButton
           buttonItem={(<Button type="primary">添加</Button>)}
           title="添加图片"
-          WrappedForm={WrappedAddForm}
+          wrappedForm={<WrappedAddForm  groups={groups}/>}
           onSubmit={onImageAdd}
         />
       </div>
