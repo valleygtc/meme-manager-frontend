@@ -69,8 +69,8 @@ export default function App() {
     return respJSON;
   }
 
-  const refresh = async () => {
-    console.log('App: handle refresh');
+  const refreshGroups = async () => {
+    console.log('App: refreshGroups');
     // fetch group
     let groups;
     try {
@@ -80,7 +80,10 @@ export default function App() {
       return
     }
     setGroups(['all', ...groups]);
+  }
 
+  const refreshImages = async () => {
+    console.log('App: refreshImageMetaDatas');
     // fetch images
     let imagesJSON;
     try {
@@ -98,8 +101,9 @@ export default function App() {
   }
 
   useEffect(() => {
-    refresh();
-  }, [])
+    refreshGroups();
+    refreshImages();
+  }, []);
 
   const handleCurrentPageChange = async (page) => {
     // fetch images
@@ -177,7 +181,7 @@ export default function App() {
 
     message.success(`成功新建组“${name}”`);
     console.log('Success: %o', { resp });
-    refresh();
+    refreshGroups();
     return ;
   }
 
@@ -196,7 +200,7 @@ export default function App() {
 
     message.success(`成功删除组“${name}”`);
     console.log('Success: %o', { resp });
-    refresh();
+    refreshGroups();
     return ;
   }
 
@@ -216,7 +220,7 @@ export default function App() {
 
     message.success(`成功重命名组“${old}”为“${new_}”`);
     console.log('Success: %o', { resp });
-    refresh();
+    refreshGroups();
     return ;
   }
 
@@ -290,7 +294,7 @@ export default function App() {
 
     message.success('添加图片成功');
     console.log('Success: %o', { resp });
-    refresh();
+    refreshImages();
     return ;
   }
 
@@ -305,7 +309,7 @@ export default function App() {
 
     message.success('删除图片成功');
     console.log('Success: %o', { resp });
-    refresh();
+    refreshImages();
     return ;
   }
 
@@ -324,7 +328,7 @@ export default function App() {
 
     message.success(`成功移动图片至组“${group}”`);
     console.log('Success: %o', { resp });
-    refresh();
+    refreshImages();
     return ;
   }
 
@@ -344,7 +348,7 @@ export default function App() {
 
     message.success('添加标签成功');
     console.log('Success: %o', { resp });
-    refresh();
+    refreshImages();
     return ;
   }
 
@@ -364,7 +368,7 @@ export default function App() {
 
     message.success('删除标签成功');
     console.log('Success: %o', { resp });
-    refresh();
+    refreshImages();
     return ;
   }
   
