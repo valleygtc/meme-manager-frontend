@@ -11,12 +11,11 @@ import TagsInput from './TagsInput.jsx';
 export default function TagsAddForm({
   onSubmit,
 }) {
-  // FIXME: 这里 form.resetFields 无效。照文档里要求的给 Modal 加上 forceRender 也没用。甚至给 Dropdown 加上 forceRender 也没用。控制台会报错。
-  // const [form] = Form.useForm();
+  const [form] = Form.useForm();
 
   const onFinish = (values) => {
     onSubmit(values['tags']);
-    // form.resetFields();
+    form.resetFields();
     console.log('Success:', values);
   };
 
@@ -34,6 +33,7 @@ export default function TagsAddForm({
 
   return (
     <Form
+      form={form}
       {...layout}
       initialValues={{
         tags: [''],

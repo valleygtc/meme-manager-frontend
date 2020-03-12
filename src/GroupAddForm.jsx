@@ -13,7 +13,6 @@ export default function GroupAddForm({
   
   const onFinish = (values) => {
     onSubmit(values);
-    // FIXME: 这里的这个没有效果，还是报错啊。
     form.resetFields();
   };
 
@@ -31,6 +30,7 @@ export default function GroupAddForm({
 
   return (
     <Form
+      form={form}
       {...layout}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}

@@ -19,7 +19,6 @@ export default function ImageAddForm({
   
   const onFinish = (values) => {
     onSubmit(values);
-    // FIXME: 这里的这个没有效果，还是报错啊。
     form.resetFields();
   };
 
@@ -37,6 +36,7 @@ export default function ImageAddForm({
 
   return (
     <Form
+      form={form}
       {...layout}
       initialValues={{
         group: 'all',
