@@ -309,8 +309,23 @@ export default function App() {
 
     message.success('删除图片成功');
     console.log('Success: %o', { resp });
-    refreshImages();
-    return ;
+    // fetch images
+    // 如果删除的是最后一页的最后一张图片，需要将分页 current 设置为前一页。
+    const { current, pageSize, total } = pagination;
+    let page = (total % pageSize === 1 && current !== 1) ? current - 1 : current
+    let imagesJSON;
+    try {
+      imagesJSON = await fetchImages(page, pageSize, searchField, currentGroup);
+    } catch (e) {
+      message.error('网络异常，刷新失败');
+      return
+    }
+    setImageMetaDatas(imagesJSON.data);
+    setPagination({
+      ...pagination,
+      current: page,
+      total: imagesJSON.pagination.total,
+    });
   }
 
   const handleImageMove = async (imageId, group) => {
