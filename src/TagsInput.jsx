@@ -5,91 +5,63 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 /** 自定义完全受控组件，受上级 Form 控制。
  * props:
- *  value [Object]: Antd Form 下传
- *  onChange [Object]: Antd Form 下传
- *
- * state:
- *  tags [Array[String]]
+ *  value [Array[String]]: Antd Form 下传
+ *  onChange [callback]: Antd Form 下传
  */
-export default class TagsInput extends React.Component {
-  static getDerivedStateFromProps(nextProps) {
-    console.log('TagsInput getDerivedStateFromProps: %o', { nextProps });
-    // Should be a controlled component.
-    if ('value' in nextProps) {
-      return {
-        tags: (nextProps.value || [''])
-      };
-    }
-    return null;
+export default function TagsInput({
+  value,
+  onChange,
+}) {
+  // TODO：这里使用 Form.Item 的 valuePropName 直接指定 tags 不行，传过来的还是 value。貌似是 antd 的 bug。暂时先这样吧。
+  const tags = value;
+
+  const handleOptionRemove = (k) => {
+    onChange([
+      ...tags.slice(0, k),
+      ...tags.slice(k + 1),
+    ]);
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      tags: this.props.value || [''],
-    };
-  }
-
-  handleOptionRemove = (k) => {
-    const tags = [
-      ...this.state.tags.slice(0, k),
-      ...this.state.tags.slice(k + 1),
-    ];
-    this.triggerChange(tags);
-  }
-
-  handleOptionAdd = () => {
-    const tags = [
-      ...this.state.tags,
+  const handleOptionAdd = () => {
+    onChange([
+      ...tags,
       '',
-    ]
-    this.triggerChange(tags);
+    ]);
   }
 
-  handleInputChange = (i, event) => {
+  const handleInputChange = (i, event) => {
     const value = event.target.value || '';
-    const tags = [...this.state.tags];
-    tags[i] = value;
-    this.triggerChange(tags);
+    const newTags = [...tags];
+    newTags[i] = value;
+    onChange(newTags);
   }
 
-  triggerChange = (tags) => {
-    this.setState({
-      tags
-    });
-    this.props.onChange(tags);
-  }
-
-  render() {
-    const { tags } = this.state;
-
-    const items = tags.map((t, index) => {
-      return (
-        <div key={index}>
-          <Input
-            value={t}
-            placeholder="Tag"
-            style={{
-              width: '80%',
-              marginBottom: '10px',
-            }}
-            onChange={(event) => { this.handleInputChange(index, event) }} />
-          {tags.length > 1 ? (
-            <MinusCircleOutlined
-              className="dynamic-delete-button"
-              onClick={() => this.handleOptionRemove(index)} />
-          ) : null}
-        </div>
-      );
-    });
-
+  const items = tags.map((t, index) => {
     return (
-      <div>
-        {items}
-        <Button type="dashed" onClick={this.handleOptionAdd}>
-          <PlusOutlined /> Add Select Item
-        </Button>
+      <div key={index}>
+        <Input
+          value={t}
+          placeholder="Tag"
+          style={{
+            width: '80%',
+            marginBottom: '10px',
+          }}
+          onChange={(event) => { handleInputChange(index, event) }} />
+        {tags.length > 1 ? (
+          <MinusCircleOutlined
+            className="dynamic-delete-button"
+            onClick={() => handleOptionRemove(index)} />
+        ) : null}
       </div>
     );
-  }
+  });
+
+  return (
+    <div>
+      {items}
+      <Button type="dashed" onClick={handleOptionAdd}>
+        <PlusOutlined /> Add Select Item
+      </Button>
+    </div>
+  );
 }
