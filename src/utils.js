@@ -66,8 +66,28 @@ function postForm(url, body={}) {
 }
 
 
+/**
+ * count array item nums
+ * 
+ * Params:
+ *   array [Array]
+ * Return:
+ *   statistics [Object]: {
+ *     <item>: <count> [Number]
+ *   }
+ */
+function countArray(array) {
+  const rv = {}
+  for (const item of array) {
+    rv[item] = rv[item] === undefined ? 1 : rv[item] + 1;
+  }
+  return rv;
+}
+
+
 export {
   get,
   post,
   postForm,
+  countArray,
 };

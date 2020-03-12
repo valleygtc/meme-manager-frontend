@@ -3,6 +3,7 @@ import { Form, Button, Select } from 'antd';
 
 import Upload from './Upload.jsx';
 import TagsInput from './TagsInput.jsx';
+import { countArray } from './utils';
 
 const { Option } = Select;
 
@@ -16,11 +17,24 @@ export default function ImageAddForm({
   onSubmit,
 }) {
   const [form] = Form.useForm();
+
+  const cleanTags = (tags) => tags.filter((t) => t !== '');
+
+  const tagsValidator = async (rule, value) => {
+    const neatTags = cleanTags(value);
+    // 禁止上传同名标签
+    const tCount = countArray(neatTags)
+    for (const [t, num] of Object.entries(tCount)) {
+      if (num > 1) {
+        throw Error(`标签“${t}”重复`);
+      }
+    }
+  }
   
   const onFinish = (values) => {
     const cleanValues = {
       ...values,
-      tags: values.tags.filter((t) => t !== ''),
+      tags: cleanTags(values.tags),
     }
     onSubmit(cleanValues);
     form.resetFields();
@@ -67,7 +81,13 @@ export default function ImageAddForm({
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="标签" name="tags">
+      <Form.Item
+        label="标签"
+        name="tags"
+        rules={[{
+          validator: tagsValidator,
+        }]}
+      >
         <TagsInput />
       </Form.Item>
       <Form.Item {...tailLayout}>
