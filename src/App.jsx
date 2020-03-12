@@ -12,6 +12,15 @@ const { BACKEND_PREFIX } = config;
 
 
 export default function App() {
+  /**
+   * {
+   *   id: [Number],
+   *   img_type: [String],
+   *   tags: [Array[String]],
+   *   group: [String],
+   *   create_at: [String],
+   * }
+   */
   const [ imageMetaDatas, setImageMetaDatas ] = useState([]);
   const [ pagination, setPagination ] = useState({
     current: 1,
@@ -38,13 +47,14 @@ export default function App() {
   }
 
   const fetchImages = async (
-    pagination,
+    current,
+    pageSize,
     searchField,
     group,
   ) => {
     const params = {
-      page: pagination.current,
-      per_page: pagination.pageSize,
+      page: current,
+      per_page: pageSize,
       [searchField.key]: searchField.value,
       group: group === 'all' ? '' : group,
     }
@@ -74,7 +84,7 @@ export default function App() {
     // fetch images
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(pagination, searchField, currentGroup);
+      imagesJSON = await fetchImages(pagination.current, pagination.pageSize, searchField, currentGroup);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
@@ -82,23 +92,67 @@ export default function App() {
     setImageMetaDatas(imagesJSON.data);
     setPagination({
       ...pagination,
-      current: imagesJSON['pagination']['page'],
-      pageSize: imagesJSON['pagination']['per_page'],
       total: imagesJSON['pagination']['total'],
     });
-    return ;
+    return
   }
 
   useEffect(() => {
     refresh();
-  }, [pagination.current, pagination.pageSize, searchField, currentGroup])
+  }, [])
 
-  const handleGroupSelect = (group) => {
+  const handleCurrentPageChange = async (page) => {
+    // fetch images
+    let imagesJSON;
+    try {
+      imagesJSON = await fetchImages(page, pagination.pageSize, searchField, currentGroup);
+    } catch (e) {
+      message.error('网络异常，刷新失败');
+      return
+    }
+    setImageMetaDatas(imagesJSON.data);
+    setPagination({
+      ...pagination,
+      current: page,
+    });
+    return ;
+  }
+
+  const handlePageSizeChange = async (pageSize) => {
+    // fetch images
+    let imagesJSON;
+    try {
+      imagesJSON = await fetchImages(1, pagination.pageSize, searchField, currentGroup);
+    } catch (e) {
+      message.error('网络异常，刷新失败');
+      return
+    }
+    setImageMetaDatas(imagesJSON.data);
     setPagination({
       ...pagination,
       current: 1,
+      pageSize,
     });
-    setCurrentGroup(group)
+    return ;
+  }
+
+  const handleGroupSelect = async (group) => {
+    setCurrentGroup(group);
+    // fetch images
+    let imagesJSON;
+    try {
+      imagesJSON = await fetchImages(1, pagination.pageSize, searchField, group);
+    } catch (e) {
+      message.error('网络异常，刷新失败');
+      return
+    }
+    setImageMetaDatas(imagesJSON.data);
+    setPagination({
+      ...pagination,
+      current: 1,
+      total: imagesJSON.pagination.total,
+    });
+    return
   }
 
   const handleGroupAdd = async (values) => {
@@ -166,26 +220,52 @@ export default function App() {
     return ;
   }
 
-  const handleSearch = (key, value) => {
-    setPagination({
-      ...pagination,
-      current: 1,
-    });
-    setSearchField({
+  const handleSearch = async (key, value) => {
+    const newSearchField = {
       key,
       value,
-    });
-  }
+    }
+    setSearchField(newSearchField);
 
-  const handleReset = () => {
-    setSearchField({
-      ...searchField,
-      value: '',
-    });
+    // fetch images
+    let imagesJSON;
+    try {
+      imagesJSON = await fetchImages(1, pagination.pageSize, newSearchField, currentGroup);
+    } catch (e) {
+      message.error('网络异常，刷新失败');
+      return
+    }
+    setImageMetaDatas(imagesJSON.data);
     setPagination({
       ...pagination,
       current: 1,
+      total: imagesJSON.pagination.total,
     });
+    return
+  }
+
+  const handleReset = async () => {
+    const newSearchField = {
+      ...searchField,
+      value: '',
+    }
+    setSearchField(newSearchField);
+
+    // fetch images
+    let imagesJSON;
+    try {
+      imagesJSON = await fetchImages(1, pagination.pageSize, newSearchField, currentGroup);
+    } catch (e) {
+      message.error('网络异常，刷新失败');
+      return
+    }
+    setImageMetaDatas(imagesJSON.data);
+    setPagination({
+      ...pagination,
+      current: 1,
+      total: imagesJSON.pagination.total,
+    });
+    return
   }
 
   const handleImageAdd = async (values) => {
@@ -342,16 +422,8 @@ export default function App() {
             {...pagination}
             showSizeChanger
             pageSizeOptions={['20', '50', '100', '200']}
-            onChange={(page, pageSize) => setPagination({
-              ...pagination,
-              current: page,
-              pageSize,
-            })}
-            onShowSizeChange={(current, size) => setPagination({
-              ...pagination,
-              current,
-              pageSize: size,
-            })}
+            onChange={(page, pageSize) => handleCurrentPageChange(page)}
+            onShowSizeChange={(current, size) => handlePageSizeChange(size)}
           />
         </div>
       </div>
