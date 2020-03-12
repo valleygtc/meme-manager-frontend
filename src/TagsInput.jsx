@@ -12,7 +12,6 @@ export default function TagsInput({
   value,
   onChange,
 }) {
-  // TODO：这里使用 Form.Item 的 valuePropName 直接指定 tags 不行，传过来的还是 value。貌似是 antd 的 bug。暂时先这样吧。
   const tags = value;
 
   const handleOptionRemove = (k) => {

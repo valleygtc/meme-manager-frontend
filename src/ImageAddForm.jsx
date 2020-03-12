@@ -18,7 +18,11 @@ export default function ImageAddForm({
   const [form] = Form.useForm();
   
   const onFinish = (values) => {
-    onSubmit(values);
+    const cleanValues = {
+      ...values,
+      tags: values.tags.filter((t) => t !== ''),
+    }
+    onSubmit(cleanValues);
     form.resetFields();
   };
 
