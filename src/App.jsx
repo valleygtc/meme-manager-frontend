@@ -126,7 +126,7 @@ export default function App() {
     // fetch images
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(1, pagination.pageSize, searchField, currentGroup);
+      imagesJSON = await fetchImages(1, pageSize, searchField, currentGroup);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
