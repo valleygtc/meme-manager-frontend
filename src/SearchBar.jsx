@@ -6,8 +6,8 @@ const { Option } = Select;
 
 /**
  * props:
- *   initialKey [String]
- *   initialValue [String]
+ *   initialRange [String]: 'all' or 'group'
+ *   initialTag [String]
  *   onSearch [callback]
  *   onReset [callback]
  *
@@ -15,16 +15,18 @@ const { Option } = Select;
  *   initialKey [String]
  */
 export default function SearchBar({
-  initialKey,
-  initialValue,
+  initialRange,
+  initialTag,
   onSearch,
   onReset,
 }) {
-  const [ key, setKey ] = useState(initialKey);
-  const [value, setValue] = useState(initialValue);
+  // range: 'all' or 'group'
+  const [ range, setRange ] = useState(initialRange);
+  const [ tag, setTag ] = useState(initialTag);
 
   const handleReset = () => {
-    setValue('');
+    setRange('all');
+    setTag('');
     onReset();
   }
 
@@ -35,15 +37,19 @@ export default function SearchBar({
       }}
     >
       <Select
-        value={key}
-        onSelect={setKey}
+        style={{
+          minWidth: '6em',
+        }}
+        value={range}
+        onSelect={setRange}
       >
-        <Option value="tag">标签</Option>
+        <Option value="all">全部</Option>
+        <Option value="group">组内</Option>
       </Select>
       <Input.Search
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onSearch={(value) => onSearch(key, value)}
+        value={tag}
+        onChange={(e) => setTag(e.target.value)}
+        onSearch={(tag) => onSearch(range, tag)}
         enterButton
       />
       <div

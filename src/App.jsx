@@ -27,9 +27,10 @@ export default function App() {
     pageSize: 20,
     total: null,
   });
-  const [ searchField, setSearchField ] = useState({
-    key: 'tag',
-    value: '',
+  // range: 'all' or 'group'
+  const [ searchInfo, setSearchInfo ] = useState({
+    range: 'all',
+    tag: '',
   });
   const [ groups, setGroups ] = useState(['all']);
   const [ currentGroup, setCurrentGroup ] = useState('all');
@@ -49,13 +50,13 @@ export default function App() {
   const fetchImages = async (
     current,
     pageSize,
-    searchField,
+    searchTag,
     group,
   ) => {
     const params = {
       page: current,
       per_page: pageSize,
-      [searchField.key]: searchField.value,
+      tag: searchTag,
       group: group === 'all' ? '' : group,
     }
     const resp = await get(`${BACKEND_PREFIX}/api/images/`, params);
@@ -87,7 +88,7 @@ export default function App() {
     // fetch images
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(pagination.current, pagination.pageSize, searchField, currentGroup);
+      imagesJSON = await fetchImages(pagination.current, pagination.pageSize, searchInfo.tag, currentGroup);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
@@ -109,7 +110,7 @@ export default function App() {
     // fetch images
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(page, pagination.pageSize, searchField, currentGroup);
+      imagesJSON = await fetchImages(page, pagination.pageSize, searchInfo.tag, currentGroup);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
@@ -126,7 +127,7 @@ export default function App() {
     // fetch images
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(1, pageSize, searchField, currentGroup);
+      imagesJSON = await fetchImages(1, pageSize, searchInfo.tag, currentGroup);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
@@ -145,7 +146,7 @@ export default function App() {
     // fetch images
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(1, pagination.pageSize, searchField, group);
+      imagesJSON = await fetchImages(1, pagination.pageSize, searchInfo.tag, group);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
@@ -224,17 +225,18 @@ export default function App() {
     return ;
   }
 
-  const handleSearch = async (key, value) => {
-    const newSearchField = {
-      key,
-      value,
-    }
-    setSearchField(newSearchField);
+  const handleSearch = async (range, tag) => {
+    setSearchInfo({
+      range,
+      tag,
+    });
+
+    const group = range === 'all' ? 'all' : currentGroup;
 
     // fetch images
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(1, pagination.pageSize, newSearchField, currentGroup);
+      imagesJSON = await fetchImages(1, pagination.pageSize, tag, group);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
@@ -249,16 +251,17 @@ export default function App() {
   }
 
   const handleReset = async () => {
-    const newSearchField = {
-      ...searchField,
-      value: '',
-    }
-    setSearchField(newSearchField);
+    const range = 'all';
+    const tag = '';
+    setSearchInfo({
+      range,
+      tag,
+    });
 
     // fetch images
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(1, pagination.pageSize, newSearchField, currentGroup);
+      imagesJSON = await fetchImages(1, pagination.pageSize, tag, currentGroup);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
@@ -315,7 +318,7 @@ export default function App() {
     let page = (total % pageSize === 1 && current !== 1) ? current - 1 : current
     let imagesJSON;
     try {
-      imagesJSON = await fetchImages(page, pageSize, searchField, currentGroup);
+      imagesJSON = await fetchImages(page, pageSize, searchInfo.tag, currentGroup);
     } catch (e) {
       message.error('网络异常，刷新失败');
       return
@@ -412,7 +415,7 @@ export default function App() {
           <FunctionBar
             groups={groups}
             currentGroup={currentGroup}
-            searchField={searchField}
+            searchInfo={searchInfo}
             onGroupSelect={handleGroupSelect}
             onGroupAdd={handleGroupAdd}
             onGroupDelete={handleGroupDelete}

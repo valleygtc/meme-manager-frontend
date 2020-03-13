@@ -11,7 +11,7 @@ import GroupSelect from './GroupSelect';
  * props:
  *   groups [Array[String]]
  *   currentGroup [String]
- *   searchField [Object]: {key: , value: }
+ *   searchInfo [Object]: {range: [String], tag: [String]}
  *   onGroupSelect [callback]
  *   onGroupAdd [callback]
  *   onGroupDelete [callback]
@@ -23,7 +23,7 @@ import GroupSelect from './GroupSelect';
 export default function FunctionBar({
   groups,
   currentGroup,
-  searchField,
+  searchInfo,
   onGroupSelect,
   onGroupAdd,
   onGroupDelete,
@@ -56,8 +56,8 @@ export default function FunctionBar({
         }}
       >
         <SearchBar
-          initialKey={searchField.key}
-          initialValue={searchField.value}
+          initialRange={searchInfo.range}
+          initialTag={searchInfo.tag}
           onSearch={onSearch}
           onReset={onReset}
         />
