@@ -31,7 +31,7 @@ export default function ImageAddForm({
     }
   }
   
-  const onFinish = (values) => {
+  const handleFinish = (values) => {
     const cleanValues = {
       ...values,
       tags: cleanTags(values.tags),
@@ -40,9 +40,13 @@ export default function ImageAddForm({
     form.resetFields();
   };
 
-  const onFinishFailed = (errorInfo) => {
+  const handleFinishFailed = (errorInfo) => {
     console.error(errorInfo);
   };
+
+  const handleReset = () => {
+    form.resetFields();
+  }
 
   const layout = {
     labelCol: { span: 4 },
@@ -54,14 +58,15 @@ export default function ImageAddForm({
 
   return (
     <Form
+      name="addImageForm"
       form={form}
       {...layout}
       initialValues={{
         group: 'all',
         tags: [''],
       }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      onFinish={handleFinish}
+      onFinishFailed={handleFinishFailed}
     >
       <Form.Item
         label="图片"
@@ -93,6 +98,9 @@ export default function ImageAddForm({
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           提交
+        </Button>
+        <Button htmlType="button" onClick={handleReset}>
+          重置
         </Button>
       </Form.Item>
     </Form>

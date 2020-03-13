@@ -36,3 +36,7 @@
 .imageBox:hover {
     border-color: black;
 }
+
+#addImageForm .ant-btn {
+    margin-right: 8px;
+}
