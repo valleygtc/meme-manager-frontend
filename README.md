@@ -5,7 +5,6 @@ $ yarn
 
 # run dev
 $ yarn start
-$ yarn start-electron
 ```
 
 # build
